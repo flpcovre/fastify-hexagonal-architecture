@@ -1,0 +1,12 @@
+{
+    "editor.tabSize": 2,
+    "symbols.folders.associations": {
+        "domain": "folder-core",
+        "infra": "folder-build",
+        "controllers": "folder-interceptors",
+        "ports": "folder-interfaces",
+        "entities": "folder-models",
+        "http": "folder-blue",
+        "use-cases": "folder-sky-code"
+    },
+}
