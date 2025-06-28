@@ -10,4 +10,7 @@
         "use-cases": "folder-sky-code",
         "containers": "folder-providers"
     },
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "javascript.preferences.importModuleSpecifier": "non-relative"
+
 }

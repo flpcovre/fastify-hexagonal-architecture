@@ -1,3 +1,7 @@
-import { startServer } from './app/http/server';
+import { createFastifyApp } from './app/http/server';
 
-startServer();
+createFastifyApp().then((app) => {
+  app.listen({ port: 3333 }).then(() => {
+    console.log('Server is running on http://localhost:3333');
+  });
+});
