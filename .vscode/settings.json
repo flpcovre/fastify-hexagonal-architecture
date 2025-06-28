@@ -11,6 +11,8 @@
         "containers": "folder-providers"
     },
     "typescript.preferences.importModuleSpecifier": "non-relative",
-    "javascript.preferences.importModuleSpecifier": "non-relative"
-
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "[prisma]": {
+        "editor.formatOnSave": true,
+    }
 }
