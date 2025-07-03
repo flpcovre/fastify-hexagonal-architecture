@@ -1,5 +1,5 @@
 import { User } from '@/domain/user/entities/user';
-import { HasherService } from '@/domain/user/ports/hasher-service';
+import { HasherService } from '@/shared/domain/ports/hasher-service';
 import { UserRepository } from '@/domain/user/ports/user-repository';
 import { randomUUID } from 'crypto';
 
