@@ -10,12 +10,16 @@ export const createUserResponseSchema = z.object  ({
   id: z.string(),
   name: z.string(),
   email: z.string().email(),
+  role: z.enum(['admin', 'customer', 'seller']),
+  createdAt: z.date(),
 }).describe('User created successfully');
 
 export const getUserResponseSchema = z.array(z.object({
   id: z.string(),
   name: z.string(),
   email: z.string().email(),
+  role: z.enum(['admin', 'customer', 'seller']),
+  createdAt: z.date(),
 }));
 
 export type CreateUserInput = z.infer<typeof createUserSchema>

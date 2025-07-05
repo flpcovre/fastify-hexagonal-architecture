@@ -63,6 +63,8 @@ describe('CreateUserUseCase', () => {
         name: faker.person.fullName(),
         email: input.email,
         password: faker.internet.password(),
+        role: 'customer',
+        createdAt: new Date(),
       }),
     );
 

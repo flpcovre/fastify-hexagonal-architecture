@@ -13,6 +13,8 @@ interface CreateUserOutputDto {
   id: string;
   name: string;
   email: string;
+  role: 'admin' | 'customer' | 'seller';
+  createdAt: Date;
 }
 
 export class CreateUserUseCase {
@@ -31,6 +33,8 @@ export class CreateUserUseCase {
       name: input.name,
       email: input.email,
       password: await this.hasherService.hash(input.password),
+      role: 'customer',
+      createdAt: new Date(),
     });
 
     await this.userRepository.create(user);
@@ -39,6 +43,8 @@ export class CreateUserUseCase {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
     };
   }
 }
