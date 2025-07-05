@@ -4,7 +4,7 @@ export class User {
     public readonly name: string,
     public readonly email: string,
     public readonly password: string,
-    public readonly role: 'admin' | 'customer' | 'seller',
+    public readonly role: 'admin' | 'supervisor' | 'attendant',
     public readonly createdAt: Date,
   ) {}
 

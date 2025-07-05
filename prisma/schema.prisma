@@ -15,8 +15,8 @@ datasource db {
 
 enum Role {
   admin
-  customer
-  seller
+  supervisor
+  attendant
 }
 
 model User {
@@ -28,4 +28,14 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("users")
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("customers")
 }
