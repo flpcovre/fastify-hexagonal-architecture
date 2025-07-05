@@ -1,5 +1,5 @@
-import { createUserResponseSchema, createUserSchema, getUserResponseSchema } from '@/app/http/routes/users/schema';
-import { FastifyTypedInstance } from '@/app/http/types';
+import { createUserResponseSchema, createUserSchema, getUserResponseSchema } from '@/adapters/http/routes/users/schema';
+import { FastifyTypedInstance } from '@/adapters/http/types';
 import { makeUserController } from '@/infra/factories/controllers/create-user-controller.factory';
 import { FastifyPluginCallback } from 'fastify';
 

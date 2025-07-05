@@ -1,4 +1,4 @@
-import { CreateUserInput } from '@/app/http/routes/users/schema';
+import { CreateUserInput } from '@/adapters/http/routes/users/schema';
 import { CreateUserUseCase } from '@/domain/user/use-cases/create-user.use-case';
 import { ListUsersUseCase } from '@/domain/user/use-cases/list-users.use-case';
 import { FastifyReply, FastifyRequest } from 'fastify';

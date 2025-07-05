@@ -1,4 +1,4 @@
-import { UserController } from '@/app/controllers/user.controller';
+import { UserController } from '@/adapters/controllers/user.controller';
 import { CreateUserUseCase } from '@/domain/user/use-cases/create-user.use-case';
 import { ListUsersUseCase } from '@/domain/user/use-cases/list-users.use-case';
 import { UserRepositoryPrisma } from '@/infra/database/prisma/repositories/user-repository.prisma';

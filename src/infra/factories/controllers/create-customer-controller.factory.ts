@@ -1,4 +1,4 @@
-import { CustomerController } from '@/app/controllers/customer.controller';
+import { CustomerController } from '@/adapters/controllers/customer.controller';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { ListCustomersUseCase } from '@/domain/customer/use-cases/list-customers.use-case';
 import { CustomerRepositoryPrisma } from '@/infra/database/prisma/repositories/customer-repository.prisma';
