@@ -3,7 +3,7 @@ import { CreateUserUseCase } from '@/domain/user/use-cases/create-user.use-case'
 import { ListUsersUseCase } from '@/domain/user/use-cases/list-users.use-case';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-export default class UserController {
+export class UserController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly listUsersUseCase: ListUsersUseCase,
@@ -15,9 +15,9 @@ export default class UserController {
   }
 
   public async store(request: FastifyRequest<{ Body: CreateUserInput }>, reply: FastifyReply): Promise<void> {
-    const { name, email, password } = request.body;
+    const { name, email, password, role } = request.body;
 
-    const user = await this.createUserUseCase.execute({ name, email, password });
+    const user = await this.createUserUseCase.execute({ name, email, password, role });
 
     return reply.status(201).send(user);
   }
