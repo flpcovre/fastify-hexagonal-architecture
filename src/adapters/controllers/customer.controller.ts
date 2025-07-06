@@ -1,4 +1,4 @@
-import { CreateCustomerInput } from '@/app/http/routes/customers/schema';
+import { CreateCustomerInput } from '@/adapters/http/routes/customers/schema';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { ListCustomersUseCase } from '@/domain/customer/use-cases/list-customers.use-case';
 import { FastifyReply, FastifyRequest } from 'fastify';

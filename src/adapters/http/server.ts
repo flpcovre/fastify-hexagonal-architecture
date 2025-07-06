@@ -4,7 +4,7 @@ import { validatorCompiler, serializerCompiler, ZodTypeProvider, jsonSchemaTrans
 import { fastifySwagger } from '@fastify/swagger';
 import { fastifySwaggerUi } from '@fastify/swagger-ui';
 import { join } from 'path';
-import { FastifyAppBuilder, FastifyAppConfig } from '@/app/http/types';
+import { FastifyAppBuilder, FastifyAppConfig } from '@/adapters/http/types';
 import { FASTIFY_APP_CONFIG } from '@/config/fastify-app';
 import fastifyAutoload from '@fastify/autoload';
 

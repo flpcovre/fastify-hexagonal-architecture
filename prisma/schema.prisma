@@ -19,6 +19,12 @@ enum Role {
   attendant
 }
 
+enum ChatStatus {
+  active
+  finished
+  inProgress
+}
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -26,6 +32,7 @@ model User {
   password  String
   role      Role
   createdAt DateTime @default(now()) @map("created_at")
+  Chat      Chat[]
 
   @@map("users")
 }
@@ -36,6 +43,21 @@ model Customer {
   email     String?
   phone     String   @unique
   createdAt DateTime @default(now()) @map("created_at")
+  Chat      Chat[]
 
   @@map("customers")
+}
+
+model Chat {
+  id         String     @id @default(uuid())
+  customerId String     @map("customer_id")
+  userId     String?    @map("user_id")
+  status     ChatStatus @default(active)
+  createdAt  DateTime   @default(now()) @map("created_at")
+  finishedAt DateTime?  @map("finished_at")
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  user     User?    @relation(fields: [userId], references: [id])
+
+  @@map("chats")
 }
