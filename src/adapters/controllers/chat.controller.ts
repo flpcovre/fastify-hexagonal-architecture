@@ -1,16 +1,16 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CreateChatWithCustomerOrchestrator } from '@/app/orchestrators/create-chat-with-customer.orchestrator';
 import { CreateChatInput } from '@/adapters/http/routes/chats/schema';
+import { HandleIncomingCustomerUseCase } from '@/application/use-cases/handle-incoming-customer-message.use-case';
 
 export class ChatController {
   constructor(
-    private readonly createChatWithCustomerOrchestrator: CreateChatWithCustomerOrchestrator,
+    private readonly handleIncomingCustomerUseCase: HandleIncomingCustomerUseCase,
   ) {}
 
   public async store(request: FastifyRequest<{ Body: CreateChatInput }>, reply: FastifyReply) {
     const { name, email, phone } = request.body;
 
-    const result = await this.createChatWithCustomerOrchestrator.execute({
+    const result = await this.handleIncomingCustomerUseCase.execute({
       name,
       email,
       phone,

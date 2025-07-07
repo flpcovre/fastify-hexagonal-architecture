@@ -105,9 +105,25 @@ model Message {
   order        Int           @default(autoincrement())
   createdAt    DateTime      @default(now()) @map("created_at")
 
+  Attachment Attachment[]
+
   chat Chat  @relation(fields: [chatId], references: [id])
   user User? @relation(fields: [senderUserId], references: [id])
 
   @@index([chatId, senderUserId], name: "chat_sender_idx")
   @@map("messages")
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  messageId String   @map("message_id")
+  mimeType  String
+  fileName  String?
+  mediaKey  String?
+  url       String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  message Message @relation(fields: [messageId], references: [id])
+
+  @@map("attachments")
 }
