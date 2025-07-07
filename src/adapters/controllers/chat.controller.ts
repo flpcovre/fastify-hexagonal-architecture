@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CreateChatWithCustomerOrchestrator } from '@/application/orchestrators/create-chat-with-customer.orchestrator';
+import { CreateChatWithCustomerOrchestrator } from '@/app/orchestrators/create-chat-with-customer.orchestrator';
 import { CreateChatInput } from '@/adapters/http/routes/chats/schema';
 
 export class ChatController {

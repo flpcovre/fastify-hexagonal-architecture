@@ -25,6 +25,21 @@ enum ChatStatus {
   inProgress
 }
 
+enum MessageType {
+  text
+  image
+  audio
+  video
+  file
+  location
+  contact
+}
+
+enum MessageOrigin {
+  customer
+  user
+}
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -32,7 +47,9 @@ model User {
   password  String
   role      Role
   createdAt DateTime @default(now()) @map("created_at")
-  Chat      Chat[]
+
+  ChatUsers ChatUsers[]
+  Message   Message[]
 
   @@map("users")
 }
@@ -43,7 +60,8 @@ model Customer {
   email     String?
   phone     String   @unique
   createdAt DateTime @default(now()) @map("created_at")
-  Chat      Chat[]
+
+  Chat Chat[]
 
   @@map("customers")
 }
@@ -56,8 +74,40 @@ model Chat {
   createdAt  DateTime   @default(now()) @map("created_at")
   finishedAt DateTime?  @map("finished_at")
 
-  customer Customer @relation(fields: [customerId], references: [id])
-  user     User?    @relation(fields: [userId], references: [id])
+  customer  Customer    @relation(fields: [customerId], references: [id])
+  ChatUsers ChatUsers[]
+  Message   Message[]
 
   @@map("chats")
+}
+
+model ChatUsers {
+  id        Int      @id @default(autoincrement())
+  chatId    String   @map("chat_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("chat_users")
+}
+
+model Message {
+  id           String        @id @default(uuid())
+  chatId       String        @map("chat_id")
+  senderUserId String?       @map("sender_user_id")
+  content      String?
+  origin       MessageOrigin
+  type         MessageType
+  whatsappKey  String?       @map("whatsapp_key")
+  read         Boolean       @default(false)
+  order        Int           @default(autoincrement())
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  chat Chat  @relation(fields: [chatId], references: [id])
+  user User? @relation(fields: [senderUserId], references: [id])
+
+  @@index([chatId, senderUserId], name: "chat_sender_idx")
+  @@map("messages")
 }
