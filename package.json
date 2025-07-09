@@ -9,7 +9,8 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "worker:download-attachment": "tsx watch src/infra/services/workers/download-attachment.worker.ts"
   },
   "keywords": [],
   "author": "",
@@ -38,6 +39,7 @@
     "@prisma/client": "6.10.1",
     "argon2": "^0.43.0",
     "bcrypt": "^6.0.0",
+    "bullmq": "^5.56.2",
     "fastify": "^5.3.3",
     "fastify-plugin": "^5.0.1",
     "fastify-type-provider-zod": "^4.0.2",

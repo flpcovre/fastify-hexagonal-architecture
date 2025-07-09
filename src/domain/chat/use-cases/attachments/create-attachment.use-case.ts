@@ -1,6 +1,7 @@
 import { Attachment } from '@/domain/chat/entities/attachment';
 import { MessageType } from '@/domain/chat/entities/message';
 import { AttachmentRepository } from '@/domain/chat/ports/attachment-repository';
+import { JobQueuePublisher } from '@/shared/domain/ports/job-queue-publisher';
 import { randomUUID } from 'crypto';
 
 interface CreateAttachmentInputDto {
@@ -14,6 +15,7 @@ interface CreateAttachmentInputDto {
 export class CreateAttachmentUseCase {
   constructor(
     private readonly attachmentRepository: AttachmentRepository,
+    private readonly jobQueuePublisher: JobQueuePublisher,
   ) {}
 
   public async execute(input: CreateAttachmentInputDto): Promise<void> {
@@ -30,5 +32,6 @@ export class CreateAttachmentUseCase {
     });
 
     await this.attachmentRepository.create(attachment);
+    await this.jobQueuePublisher.publish('attachments', 'download-attachment', attachment);
   }
 }

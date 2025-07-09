@@ -10,11 +10,17 @@ import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories
 import { ChatRepositoryPrisma } from '@/infra/database/prisma/repositories/chat-repository.prisma';
 import { CustomerRepositoryPrisma } from '@/infra/database/prisma/repositories/customer-repository.prisma';
 import { MessageRepositoryPrisma } from '@/infra/database/prisma/repositories/message-repository.prisma';
+import { BullMQPublisher } from '@/infra/services/queues/bullmq/bullmq-publisher';
 
 export function makeMessageController() {
   const createUserMessageUseCase = new CreateUserMessageUseCase(
     new MessageRepositoryPrisma(),
   );
+
+  const jobQueuePublisher = new BullMQPublisher({
+    host: 'redis',
+    port: 6379,
+  });
 
   const customerRepository = new CustomerRepositoryPrisma();
   const chatRepository = new ChatRepositoryPrisma();
@@ -24,7 +30,7 @@ export function makeMessageController() {
   const findCustomerUseCase = new FindCustomerUseCase(customerRepository);
   const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
   const findActiveCustomerChatUseCase = new FindActiveCustomerChatUseCase(chatRepository);
-  const createAttachmentUseCase = new CreateAttachmentUseCase(attachmentRepository);
+  const createAttachmentUseCase = new CreateAttachmentUseCase(attachmentRepository, jobQueuePublisher);
   const createCustomerMessageUseCase = new CreateCustomerMessageUseCase(messageRepository, createAttachmentUseCase);
 
   const handleIncomingCustomerMessageUseCase = new HandleIncomingCustomerMessageUseCase(

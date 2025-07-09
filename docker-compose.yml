@@ -13,6 +13,21 @@ services:
       - web
     depends_on:
       - postgres
+    command: pnpm run dev
+  
+  worker-download-attachment:
+    container_name: worker-download-attachment
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - web
+    depends_on:
+      - redis
+    command: pnpm run worker:download-attachment 
 
   postgres:
     container_name: postgres
@@ -28,8 +43,19 @@ services:
     networks:
       - web
 
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - web
+
 volumes:
   postgres_data:
+  redisdata:
 
 networks:
   web:
