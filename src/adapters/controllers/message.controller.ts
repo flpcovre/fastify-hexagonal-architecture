@@ -1,6 +1,6 @@
 import { ChatMessageParams, CreateChatMessageInput, InboundMessageInput } from '@/adapters/http/routes/messages/schema';
 import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/handle-incoming-customer-message.use-case';
-import { CreateUserMessageUseCase } from '@/domain/chat/use-cases/create-user-message.use-case';
+import { CreateUserMessageUseCase } from '@/domain/chat/use-cases/messages/create-user-message.use-case';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 export class MessageController {

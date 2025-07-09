@@ -40,6 +40,12 @@ enum MessageOrigin {
   user
 }
 
+enum AttachmentStatus {
+  pending
+  failed
+  processed
+}
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -115,13 +121,15 @@ model Message {
 }
 
 model Attachment {
-  id        String   @id @default(uuid())
-  messageId String   @map("message_id")
+  id        String           @id @default(uuid())
+  messageId String           @map("message_id")
+  type      MessageType
   mimeType  String
   fileName  String?
   mediaKey  String?
   url       String?
-  createdAt DateTime @default(now()) @map("created_at")
+  status    AttachmentStatus @default(pending)
+  createdAt DateTime         @default(now()) @map("created_at")
 
   message Message @relation(fields: [messageId], references: [id])
 

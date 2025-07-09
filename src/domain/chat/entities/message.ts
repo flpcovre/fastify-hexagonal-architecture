@@ -1,4 +1,4 @@
-export type MessageType = 'text' | 'image' | 'audio' | 'video' | 'file' | 'location' | 'contact';
+export type MessageType = 'text' | 'image' | 'audio' | 'file';
 export type MessageOrigin = 'customer' | 'user';
 
 export class Message {

@@ -1,5 +1,7 @@
 import z from 'zod';
 
+export const messageTypeSchema = z.enum(['text', 'image', 'audio', 'file']);
+
 export const chatMessageParamsSchema = z.object({
   chatId: z.string().uuid(),
 });
@@ -7,7 +9,7 @@ export const chatMessageParamsSchema = z.object({
 export const createChatMessageSchema = z.object({
   userId: z.string().uuid(),
   content: z.string(),
-  type: z.enum(['text', 'image', 'audio', 'video', 'file', 'location', 'contact']),
+  type: messageTypeSchema,
 });
 
 export const createMessageResponseSchema = z.object({
@@ -17,12 +19,14 @@ export const createMessageResponseSchema = z.object({
 
 export const inboundMessageSchema = z.object({
   id: z.string(),
+  name: z.string(),
   from: z.string(),
   timestamp: z.string(),
-  type: z.enum(['text', 'image', 'audio', 'video', 'file', 'location', 'contact']),
+  type: messageTypeSchema,
   content: z.string(),
   media: z.object({
     id: z.string(),
+    type: messageTypeSchema,
     mimeType: z.string(),
     fileName: z.string().optional(),
     mediaKey: z.string().optional(),

@@ -1,6 +1,6 @@
 import { InboundMessageDto } from '@/application/dtos/inbound-message.dto';
-import { HandleCustomerMessageTypeUseCase } from '@/application/use-cases/handle-customer-message-type.use-case';
 import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/find-active-customer-chat.use-case';
+import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
 
@@ -9,7 +9,7 @@ export class HandleIncomingCustomerMessageUseCase {
     private readonly findCustomerUseCase: FindCustomerUseCase,
     private readonly createCustomerUseCase: CreateCustomerUseCase,
     private readonly findActiveCustomerChatUseCase: FindActiveCustomerChatUseCase,
-    private readonly handleCustomerMessageTypeUseCase: HandleCustomerMessageTypeUseCase,
+    private readonly createCustomerMessageUseCase: CreateCustomerMessageUseCase,
   ) {}
 
   public async execute(input: InboundMessageDto): Promise<void> {
@@ -19,7 +19,7 @@ export class HandleIncomingCustomerMessageUseCase {
 
     if (!customer) {
       customer = await this.createCustomerUseCase.execute({
-        name: input.from,
+        name: input.name,
         phone: input.from,
       });
     } else {
@@ -28,7 +28,14 @@ export class HandleIncomingCustomerMessageUseCase {
       });
 
       if (haveActiveChat) {
-        await this.handleCustomerMessageTypeUseCase.execute(input);
+        await this.createCustomerMessageUseCase.execute({
+          chatId: haveActiveChat.id,
+          content: input.content,
+          type: input.type,
+          whatsappKey: input.id,
+          media: input.media,
+        });
+        return;
       }
     }
 
