@@ -1,3 +1,6 @@
+import { Attachment } from '@/domain/chat/entities/attachment';
+import { UpdateAttachmentStatusUseCase } from '@/domain/chat/use-cases/attachments/update-attachment-status.use-case';
+import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/attachment-repository.prisma';
 import { BullMQConsumer } from '@/infra/services/queues/bullmq/bullmq-consumer';
 
 const consumer = new BullMQConsumer({
@@ -5,7 +8,16 @@ const consumer = new BullMQConsumer({
   port: 6379,
 });
 
-consumer.consume('attachments', 'download-attachment', async(data) => {
+const updateAttachmentStatusUseCase = new UpdateAttachmentStatusUseCase(new AttachmentRepositoryPrisma());
+
+consumer.consume<Attachment>('attachments', 'download-attachment', async(data) => {
   await new Promise(resolve => setTimeout(resolve, 10000));
-  console.log(data);
+
+  await updateAttachmentStatusUseCase.execute({
+    id: data.id,
+    status: 'processed',
+    url: 'https://example.com/attachment.pdf',
+  });
+
+  console.log('Attachment status updated');
 });

@@ -1,4 +1,4 @@
-import { Connection } from '@/infra/services/queues/connection';
+import { Connection } from '@/infra/services/queues/bullmq/connection';
 import { JobQueuePublisher } from '@/shared/domain/ports/job-queue-publisher';
 import { Queue } from 'bullmq';
 

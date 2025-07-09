@@ -1,5 +1,7 @@
 import { MessageType } from '@/domain/chat/entities/message';
 
+export type AttachmentStatus = 'pending' | 'failed' | 'processed';
+
 export class Attachment {
   constructor(
     public readonly id: string,
@@ -9,7 +11,7 @@ export class Attachment {
     public readonly fileName: string | null,
     public readonly mediaKey: string | null,
     public readonly url: string | null,
-    public readonly status: 'pending' | 'failed' | 'processed',
+    public readonly status: AttachmentStatus,
     public readonly createdAt: Date,
   ) {}
 
