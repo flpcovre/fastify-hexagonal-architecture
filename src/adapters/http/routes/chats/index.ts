@@ -8,6 +8,7 @@ export async function chatsRoutes(app: FastifyTypedInstance) {
   app.post('/chats', {
     schema: {
       tags: ['chats'],
+      description: 'Create a new chat',
       body: createChatSchema,
       response: {
         201: createChatResponseSchema,

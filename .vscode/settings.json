@@ -8,7 +8,8 @@
         "entities": "folder-models",
         "http": "folder-blue",
         "use-cases": "folder-sky-code",
-        "containers": "folder-providers"
+        "containers": "folder-providers",
+        "application": "folder-app"
     },
     "typescript.preferences.importModuleSpecifier": "non-relative",
     "javascript.preferences.importModuleSpecifier": "non-relative",
