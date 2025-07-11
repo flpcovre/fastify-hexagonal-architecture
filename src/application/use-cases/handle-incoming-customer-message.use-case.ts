@@ -1,4 +1,4 @@
-import { InboundMessageDto } from '@/application/dtos/inbound-message.dto';
+import { InboundCustomerMessageDto } from '@/application/dtos/inbound-customer-message.dto';
 import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/find-active-customer-chat.use-case';
 import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
@@ -12,7 +12,7 @@ export class HandleIncomingCustomerMessageUseCase {
     private readonly createCustomerMessageUseCase: CreateCustomerMessageUseCase,
   ) {}
 
-  public async execute(input: InboundMessageDto): Promise<void> {
+  public async execute(input: InboundCustomerMessageDto): Promise<void> {
     let customer = await this.findCustomerUseCase.execute({
       phone: input.from,
     });

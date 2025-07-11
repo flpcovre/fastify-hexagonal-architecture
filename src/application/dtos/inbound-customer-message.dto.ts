@@ -1,6 +1,6 @@
 import { MessageType } from '@/domain/chat/entities/message';
 
-export interface InboundMessageDto {
+export interface InboundCustomerMessageDto {
   id: string;
   name: string;
   from: string;
