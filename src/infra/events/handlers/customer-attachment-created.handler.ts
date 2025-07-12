@@ -1,12 +1,12 @@
-import { AttachmentCreatedEvent } from '@/domain/chat/events/attachment-created.event';
+import { CustomerAttachmentCreatedEvent } from '@/domain/chat/events/customer-attachment-created.event';
 import { JobQueuePublisher } from '@/shared/domain/ports/job-queue-publisher';
 
-export class AttachmentCreatedEventHandler {
+export class CustomerAttachmentCreatedEventHandler {
   constructor(
     private readonly queue: JobQueuePublisher,
   ) {}
 
-  public async handle(event: AttachmentCreatedEvent): Promise<void> {
+  public async handle(event: CustomerAttachmentCreatedEvent): Promise<void> {
     await this.queue.publish('attachments', 'download-attachment', event.attachment);
   }
 }
