@@ -55,6 +55,7 @@ describe('CreateUserUseCase', () => {
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
+      role: 'admin',
     };
 
     vi.mocked(userRepository.findByEmail).mockResolvedValue(
@@ -63,6 +64,8 @@ describe('CreateUserUseCase', () => {
         name: faker.person.fullName(),
         email: input.email,
         password: faker.internet.password(),
+        role: 'admin',
+        createdAt: new Date(),
       }),
     );
 

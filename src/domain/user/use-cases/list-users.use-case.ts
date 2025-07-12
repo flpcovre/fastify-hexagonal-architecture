@@ -4,6 +4,8 @@ interface ListUsersOutputDto {
   id: string;
   name: string;
   email: string;
+  role: 'admin' | 'customer' | 'seller';
+  createdAt: Date;
 }
 
 export class ListUsersUseCase {
@@ -18,6 +20,8 @@ export class ListUsersUseCase {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
     }));
   }
 }

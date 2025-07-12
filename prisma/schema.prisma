@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated"
 }
 
 datasource db {
@@ -14,11 +13,125 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  admin
+  supervisor
+  attendant
+}
+
+enum ChatStatus {
+  active
+  finished
+  inProgress
+}
+
+enum MessageType {
+  text
+  image
+  audio
+  video
+  file
+  location
+  contact
+}
+
+enum MessageOrigin {
+  customer
+  user
+}
+
+enum AttachmentStatus {
+  pending
+  failed
+  processed
+}
+
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+  createdAt DateTime @default(now()) @map("created_at")
+
+  ChatUsers ChatUsers[]
+  Message   Message[]
 
   @@map("users")
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  phone     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  Chat Chat[]
+
+  @@map("customers")
+}
+
+model Chat {
+  id         String     @id @default(uuid())
+  customerId String     @map("customer_id")
+  userId     String?    @map("user_id")
+  status     ChatStatus @default(active)
+  createdAt  DateTime   @default(now()) @map("created_at")
+  finishedAt DateTime?  @map("finished_at")
+
+  customer  Customer    @relation(fields: [customerId], references: [id])
+  ChatUsers ChatUsers[]
+  Message   Message[]
+
+  @@map("chats")
+}
+
+model ChatUsers {
+  id        Int      @id @default(autoincrement())
+  chatId    String   @map("chat_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  chat Chat @relation(fields: [chatId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("chat_users")
+}
+
+model Message {
+  id           String        @id @default(uuid())
+  chatId       String        @map("chat_id")
+  senderUserId String?       @map("sender_user_id")
+  content      String?
+  origin       MessageOrigin
+  type         MessageType
+  whatsappKey  String?       @map("whatsapp_key")
+  read         Boolean       @default(false)
+  order        Int           @default(autoincrement())
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  Attachment Attachment[]
+
+  chat Chat  @relation(fields: [chatId], references: [id])
+  user User? @relation(fields: [senderUserId], references: [id])
+
+  @@index([chatId, senderUserId], name: "chat_sender_idx")
+  @@map("messages")
+}
+
+model Attachment {
+  id        String           @id @default(uuid())
+  messageId String           @map("message_id")
+  type      MessageType
+  mimeType  String
+  fileName  String?
+  mediaKey  String?
+  url       String?
+  status    AttachmentStatus @default(pending)
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  message Message @relation(fields: [messageId], references: [id])
+
+  @@map("attachments")
 }

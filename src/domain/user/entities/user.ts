@@ -4,6 +4,8 @@ export class User {
     public readonly name: string,
     public readonly email: string,
     public readonly password: string,
+    public readonly role: 'admin' | 'supervisor' | 'attendant',
+    public readonly createdAt: Date,
   ) {}
 
   public static make(props: User): User {
@@ -12,6 +14,8 @@ export class User {
       props.name,
       props.email,
       props.password,
+      props.role,
+      props.createdAt,
     );
   }
 }

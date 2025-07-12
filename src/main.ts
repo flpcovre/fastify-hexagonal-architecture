@@ -1,4 +1,5 @@
-import { createFastifyApp } from './app/http/server';
+import { createFastifyApp } from './adapters/http/server';
+import './infra/events/events.bootstrap';
 
 createFastifyApp().then((app) => {
   app.listen({ port: 3333, host: '0.0.0.0' }).then(() => {

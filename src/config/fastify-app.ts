@@ -1,13 +1,13 @@
-import { FastifyAppConfig } from '@/app/http/types';
+import { FastifyAppConfig } from '@/adapters/http/types';
 
 export const FASTIFY_APP_CONFIG: FastifyAppConfig = {
   cors: {
     origin: '*',
   },
   swagger: {
-    title: 'Appointments API',
+    title: 'WhatsApp Customer Service API',
     version: '1.0.0',
-    description: 'API para gerenciamento de agendamentos',
+    description: 'API para gerenciamento de Atendimentos via WhatsApp',
   },
   swaggerUi: {
     routePrefix: '/docs',
