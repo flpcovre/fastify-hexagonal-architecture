@@ -13,15 +13,13 @@ import { MessageRepositoryPrisma } from '@/infra/database/prisma/repositories/me
 import { globalEventBus as eventBus } from '@/infra/events/adapters/simple-event-bus';
 
 export function makeMessageController() {
-  const createUserMessageUseCase = new CreateUserMessageUseCase(
-    new MessageRepositoryPrisma(),
-  );
 
   const customerRepository = new CustomerRepositoryPrisma();
   const chatRepository = new ChatRepositoryPrisma();
   const messageRepository = new MessageRepositoryPrisma();
   const attachmentRepository = new AttachmentRepositoryPrisma();
 
+  const createUserMessageUseCase = new CreateUserMessageUseCase(messageRepository, eventBus);
   const findCustomerUseCase = new FindCustomerUseCase(customerRepository);
   const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
   const findActiveCustomerChatUseCase = new FindActiveCustomerChatUseCase(chatRepository);

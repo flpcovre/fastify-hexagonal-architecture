@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "worker:download-attachment": "tsx watch src/infra/services/workers/download-attachment.worker.ts"
+    "worker:messages": "tsx watch src/infra/services/workers/messages.worker.ts",
+    "worker:attachments": "tsx watch src/infra/services/workers/attachments.worker.ts"
   },
   "keywords": [],
   "author": "",

@@ -10,7 +10,7 @@ const consumer = new BullMQConsumer({
 
 const updateAttachmentStatusUseCase = new UpdateAttachmentStatusUseCase(new AttachmentRepositoryPrisma());
 
-consumer.consume<Attachment>('attachments', 'download-attachment', async(data) => {
+consumer.consume<Attachment>('attachments', 'download-customer-attachment', async(data) => {
   console.log(data);
   await new Promise(resolve => setTimeout(resolve, 10000));
 
