@@ -15,8 +15,8 @@ services:
       - postgres
     command: pnpm run dev
   
-  worker-attachments:
-    container_name: worker-attachments
+  workers:
+    container_name: workers
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,21 +27,7 @@ services:
       - web
     depends_on:
       - redis
-    command: pnpm run worker:attachments
-
-  worker-messages:
-    container_name: worker-messages
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app
-      - /app/node_modules
-    networks:
-      - web
-    depends_on:
-      - redis
-    command: pnpm run worker:messages 
+    command: pnpm run workers
 
   postgres:
     container_name: postgres

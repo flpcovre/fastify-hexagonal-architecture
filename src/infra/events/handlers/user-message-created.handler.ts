@@ -7,6 +7,6 @@ export class UserMessageCreatedEventHandler {
   ) {}
 
   public async handle(event: UserMessageCreatedEvent): Promise<void> {
-    await this.queue.publish('messages', 'send-user-message', event.message);
+    await this.queue.publish('send-user-message-queue', event.message);
   }
 }

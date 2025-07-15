@@ -7,6 +7,6 @@ export class CustomerAttachmentCreatedEventHandler {
   ) {}
 
   public async handle(event: CustomerAttachmentCreatedEvent): Promise<void> {
-    await this.queue.publish('attachments', 'download-customer-attachment', event.attachment);
+    await this.queue.publish('download-customer-attachment-queue', event.attachment);
   }
 }

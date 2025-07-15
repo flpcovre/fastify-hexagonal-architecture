@@ -1,3 +1,3 @@
 export interface JobQueuePublisher {
-  publish<T = unknown>(queue: string, jobName: string, data: T): Promise<void>;
+  publish<T = unknown>(queue: string, data: T): Promise<void>;
 }
