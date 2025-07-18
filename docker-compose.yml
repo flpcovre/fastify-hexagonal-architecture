@@ -15,8 +15,8 @@ services:
       - postgres
     command: pnpm run dev
   
-  worker-download-attachment:
-    container_name: worker-download-attachment
+  workers:
+    container_name: workers
     build:
       context: .
       dockerfile: Dockerfile
@@ -27,7 +27,7 @@ services:
       - web
     depends_on:
       - redis
-    command: pnpm run worker:download-attachment 
+    command: pnpm run workers
 
   postgres:
     container_name: postgres

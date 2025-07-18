@@ -1,6 +1,6 @@
 import { Attachment } from '@/domain/chat/entities/attachment';
 import { MessageType } from '@/domain/chat/entities/message';
-import { AttachmentCreatedEvent } from '@/domain/chat/events/attachment-created.event';
+import { CustomerAttachmentCreatedEvent } from '@/domain/chat/events/customer-attachment-created.event';
 import { AttachmentRepository } from '@/domain/chat/ports/attachment-repository';
 import { EventBus } from '@/shared/domain/ports/event-bus';
 import { randomUUID } from 'crypto';
@@ -13,7 +13,7 @@ interface CreateAttachmentInputDto {
   mediaKey?: string;
 }
 
-export class CreateAttachmentUseCase {
+export class CreateCustomerAttachmentUseCase {
   constructor(
     private readonly attachmentRepository: AttachmentRepository,
     private readonly eventBus: EventBus,
@@ -33,6 +33,6 @@ export class CreateAttachmentUseCase {
     });
 
     await this.attachmentRepository.create(attachment);
-    await this.eventBus.publish(new AttachmentCreatedEvent(attachment));
+    await this.eventBus.publish(new CustomerAttachmentCreatedEvent(attachment));
   }
 }

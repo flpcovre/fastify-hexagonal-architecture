@@ -1,5 +1,5 @@
 import { InboundCustomerMessageDto } from '@/application/dtos/inbound-customer-message.dto';
-import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/find-active-customer-chat.use-case';
+import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/chats/find-active-customer-chat.use-case';
 import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';

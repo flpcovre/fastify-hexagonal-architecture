@@ -7,11 +7,9 @@ export class BullMQConsumer implements JobQueueConsumer {
     private readonly connection: Connection,
   ) {}
 
-  public consume<T = unknown>(queue: string, jobName: string, handler: (data: T) => Promise<void>): void {
+  public consume<T = unknown>(queue: string, handler: (data: T) => Promise<void>): void {
     new Worker(queue, async(job) => {
-      if (job.name === jobName) {
-        await handler(job.data);
-      }
+      await handler(job.data);
     }, { connection: this.connection });
   }
 }

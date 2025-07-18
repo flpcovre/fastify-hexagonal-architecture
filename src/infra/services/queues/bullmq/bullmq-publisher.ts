@@ -7,8 +7,8 @@ export class BullMQPublisher implements JobQueuePublisher {
     private readonly connection: Connection,
   ) {}
 
-  public async publish<T = unknown>(queue: string, jobName: string, data: T): Promise<void> {
+  public async publish<T = unknown>(queue: string, data: T): Promise<void> {
     const q = new Queue(queue, { connection: this.connection });
-    await q.add(jobName, data);
+    await q.add('job', data);
   }
 }
