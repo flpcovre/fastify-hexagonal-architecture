@@ -17,13 +17,18 @@ interface CreateCustomerMessageInputDto {
   };
 }
 
+interface CreateCustomerMessageOutputDto {
+  id: string,
+  createdAt: Date
+}
+
 export class CreateCustomerMessageUseCase {
   constructor(
     private readonly messageRepository: MessageRepository,
     private readonly createCustomerAttachmentUseCase: CreateCustomerAttachmentUseCase,
   ) {}
 
-  public async execute(input: CreateCustomerMessageInputDto): Promise<void> {
+  public async execute(input: CreateCustomerMessageInputDto): Promise<CreateCustomerMessageOutputDto> {
     const message = Message.make({
       id: randomUUID(),
       chatId: input.chatId,
@@ -47,5 +52,10 @@ export class CreateCustomerMessageUseCase {
         mediaKey: input.media.mediaKey,
       });
     }
+
+    return {
+      id: message.id,
+      createdAt: message.createdAt,
+    };
   }
 }

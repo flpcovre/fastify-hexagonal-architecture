@@ -6,11 +6,15 @@ import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/c
 import { CreateUserMessageUseCase } from '@/domain/chat/use-cases/messages/create-user-message.use-case';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
-import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/attachment-repository.prisma';
-import { ChatRepositoryPrisma } from '@/infra/database/prisma/repositories/chat-repository.prisma';
-import { CustomerRepositoryPrisma } from '@/infra/database/prisma/repositories/customer-repository.prisma';
-import { MessageRepositoryPrisma } from '@/infra/database/prisma/repositories/message-repository.prisma';
+import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/attachment-repository.prisma';
+import { ChatRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/chat-repository.prisma';
+import { CustomerRepositoryPrisma } from '@/infra/database/prisma/repositories/costumer/customer-repository.prisma';
+import { MessageRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/message-repository.prisma';
 import { globalEventBus as eventBus } from '@/infra/events/adapters/simple-event-bus';
+import { CustomerSessionFlowRepositoryPrisma } from '@/infra/database/prisma/repositories/flow/customer-session-flow-repository.prisma';
+import { FlowOptionRepositoryPrisma } from '@/infra/database/prisma/repositories/flow/flow-option-repository.prisma';
+import { FlowRepositoryPrisma } from '@/infra/database/prisma/repositories/flow/flow-repository.prisma';
+import { ProcessIncomingFlowMessage } from '@/domain/flow/use-cases/process-incoming-flow-message';
 
 export function makeMessageController() {
 
@@ -18,6 +22,9 @@ export function makeMessageController() {
   const chatRepository = new ChatRepositoryPrisma();
   const messageRepository = new MessageRepositoryPrisma();
   const attachmentRepository = new AttachmentRepositoryPrisma();
+  const customerSessionFlowRepository = new CustomerSessionFlowRepositoryPrisma();
+  const flowOptionRepository = new FlowOptionRepositoryPrisma();
+  const flowRepository = new FlowRepositoryPrisma();
 
   const createUserMessageUseCase = new CreateUserMessageUseCase(messageRepository, eventBus);
   const findCustomerUseCase = new FindCustomerUseCase(customerRepository);
@@ -25,12 +32,14 @@ export function makeMessageController() {
   const findActiveCustomerChatUseCase = new FindActiveCustomerChatUseCase(chatRepository);
   const createCustomerAttachmentUseCase = new CreateCustomerAttachmentUseCase(attachmentRepository, eventBus);
   const createCustomerMessageUseCase = new CreateCustomerMessageUseCase(messageRepository, createCustomerAttachmentUseCase);
+  const processIncomingFlowMessage = new ProcessIncomingFlowMessage(customerSessionFlowRepository, flowOptionRepository, flowRepository);
 
   const handleIncomingCustomerMessageUseCase = new HandleIncomingCustomerMessageUseCase(
     findCustomerUseCase,
     createCustomerUseCase,
     findActiveCustomerChatUseCase,
     createCustomerMessageUseCase,
+    processIncomingFlowMessage,
   );
 
   return new MessageController(createUserMessageUseCase, handleIncomingCustomerMessageUseCase);

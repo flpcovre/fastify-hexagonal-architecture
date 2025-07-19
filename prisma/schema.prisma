@@ -67,7 +67,8 @@ model Customer {
   phone     String   @unique
   createdAt DateTime @default(now()) @map("created_at")
 
-  Chat Chat[]
+  Chat                Chat[]
+  CustomerSessionFlow CustomerSessionFlow[]
 
   @@map("customers")
 }
@@ -124,9 +125,9 @@ model Attachment {
   id        String           @id @default(uuid())
   messageId String           @map("message_id")
   type      MessageType
-  mimeType  String
-  fileName  String?
-  mediaKey  String?
+  mimeType  String           @map("mime_type")
+  fileName  String?          @map("file_name")
+  mediaKey  String?          @map("media_key")
   url       String?
   status    AttachmentStatus @default(pending)
   createdAt DateTime         @default(now()) @map("created_at")
@@ -134,4 +135,37 @@ model Attachment {
   message Message @relation(fields: [messageId], references: [id])
 
   @@map("attachments")
+}
+
+model Flow {
+  id         String  @id
+  message    String
+  isTerminal Boolean @map("is_terminal")
+
+  FlowOptions         FlowOption[]
+  CustomerSessionFlow CustomerSessionFlow[]
+
+  @@map("flows")
+}
+
+model FlowOption {
+  id         Int    @id @default(autoincrement())
+  flowId     String @map("flow_id")
+  text       String
+  nextFlowId String @map("next_flow_id")
+
+  Flow Flow @relation(fields: [flowId], references: [id])
+
+  @@map("flow_options")
+}
+
+model CustomerSessionFlow {
+  id            Int    @id @default(autoincrement())
+  customerId    String @map("customer_id")
+  currentFlowId String @map("current_flow_id")
+
+  Customer Customer @relation(fields: [customerId], references: [id])
+  Flow     Flow     @relation(fields: [currentFlowId], references: [id])
+
+  @@map("customer_session_flows")
 }

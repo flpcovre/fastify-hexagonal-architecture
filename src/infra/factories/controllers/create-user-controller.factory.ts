@@ -1,7 +1,7 @@
 import { UserController } from '@/adapters/controllers/user.controller';
 import { CreateUserUseCase } from '@/domain/user/use-cases/create-user.use-case';
 import { ListUsersUseCase } from '@/domain/user/use-cases/list-users.use-case';
-import { UserRepositoryPrisma } from '@/infra/database/prisma/repositories/user-repository.prisma';
+import { UserRepositoryPrisma } from '@/infra/database/prisma/repositories/user/user-repository.prisma';
 import { ArgonHasher } from '@/infra/services/hashers/argon.hasher';
 
 export function makeUserController(): UserController {
