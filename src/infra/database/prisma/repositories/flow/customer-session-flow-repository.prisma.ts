@@ -31,4 +31,12 @@ export class CustomerSessionFlowRepositoryPrisma implements CustomerSessionFlowR
       data: session,
     });
   }
+
+  public async delete(session: CustomerSessionFlow): Promise<void> {
+    await this.prisma.customerSessionFlow.deleteMany({
+      where: {
+        customerId: session.customerId,
+      },
+    });
+  }
 }

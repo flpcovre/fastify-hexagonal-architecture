@@ -3,7 +3,8 @@ import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/chats/fin
 import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
-import { ProcessIncomingFlowMessage } from '@/domain/flow/use-cases/process-incoming-flow-message';
+import { HandleCustomerSessionFlowUseCase } from '@/domain/flow/use-cases/handle-customer-session-flow.use-case';
+
 
 interface HandleIncomingCustomerMessageOutputDto {
   id?: string,
@@ -18,7 +19,7 @@ export class HandleIncomingCustomerMessageUseCase {
     private readonly createCustomerUseCase: CreateCustomerUseCase,
     private readonly findActiveCustomerChatUseCase: FindActiveCustomerChatUseCase,
     private readonly createCustomerMessageUseCase: CreateCustomerMessageUseCase,
-    private readonly processIncomingFlowMessage: ProcessIncomingFlowMessage,
+    private readonly handleCustomerSessionFlowUseCase: HandleCustomerSessionFlowUseCase,
   ) {}
 
   public async execute(input: InboundCustomerMessageDto): Promise<HandleIncomingCustomerMessageOutputDto> {
@@ -32,7 +33,7 @@ export class HandleIncomingCustomerMessageUseCase {
         phone: input.from,
       });
 
-      return await this.processIncomingFlowMessage.execute({
+      return await this.handleCustomerSessionFlowUseCase.execute({
         customerId: customer.id,
         message: input.content,
       });
@@ -54,7 +55,7 @@ export class HandleIncomingCustomerMessageUseCase {
 
     // TODO: implement the logic to forward the message to some automated flow
     // throw new Error('Customer does not have an active chat');
-    return await this.processIncomingFlowMessage.execute({
+    return await this.handleCustomerSessionFlowUseCase.execute({
       customerId: customer.id,
       message: input.content,
     });

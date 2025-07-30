@@ -8,13 +8,16 @@ import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-custom
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
 import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/attachment-repository.prisma';
 import { ChatRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/chat-repository.prisma';
-import { CustomerRepositoryPrisma } from '@/infra/database/prisma/repositories/costumer/customer-repository.prisma';
+import { CustomerRepositoryPrisma } from '@/infra/database/prisma/repositories/customer/customer-repository.prisma';
 import { MessageRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/message-repository.prisma';
 import { globalEventBus as eventBus } from '@/infra/events/adapters/simple-event-bus';
 import { CustomerSessionFlowRepositoryPrisma } from '@/infra/database/prisma/repositories/flow/customer-session-flow-repository.prisma';
 import { FlowOptionRepositoryPrisma } from '@/infra/database/prisma/repositories/flow/flow-option-repository.prisma';
 import { FlowRepositoryPrisma } from '@/infra/database/prisma/repositories/flow/flow-repository.prisma';
-import { ProcessIncomingFlowMessage } from '@/domain/flow/use-cases/process-incoming-flow-message';
+import { HandleCustomerSessionFlowUseCase } from '@/domain/flow/use-cases/handle-customer-session-flow.use-case';
+import { FlowNavigatorUseCase } from '@/domain/flow/use-cases/flow-navigator.use-case';
+import { FindInitialFlowUseCase } from '@/domain/flow/use-cases/find-initial-flow.use-case';
+
 
 export function makeMessageController() {
 
@@ -32,14 +35,16 @@ export function makeMessageController() {
   const findActiveCustomerChatUseCase = new FindActiveCustomerChatUseCase(chatRepository);
   const createCustomerAttachmentUseCase = new CreateCustomerAttachmentUseCase(attachmentRepository, eventBus);
   const createCustomerMessageUseCase = new CreateCustomerMessageUseCase(messageRepository, createCustomerAttachmentUseCase);
-  const processIncomingFlowMessage = new ProcessIncomingFlowMessage(customerSessionFlowRepository, flowOptionRepository, flowRepository);
+  const flowNavigatorUseCase = new FlowNavigatorUseCase(flowRepository, flowOptionRepository);
+  const findInitialFlowUseCase = new FindInitialFlowUseCase(flowRepository, flowOptionRepository);
+  const handleCustomerSessionFlowUseCase = new HandleCustomerSessionFlowUseCase(customerSessionFlowRepository, flowNavigatorUseCase, findInitialFlowUseCase);
 
   const handleIncomingCustomerMessageUseCase = new HandleIncomingCustomerMessageUseCase(
     findCustomerUseCase,
     createCustomerUseCase,
     findActiveCustomerChatUseCase,
     createCustomerMessageUseCase,
-    processIncomingFlowMessage,
+    handleCustomerSessionFlowUseCase,
   );
 
   return new MessageController(createUserMessageUseCase, handleIncomingCustomerMessageUseCase);

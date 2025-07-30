@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { flowSeeder } from 'prisma/seeders/flows.seeder';
+import { flowSeeder } from '@/infra/database/prisma/seeders/flows.seeder';
 
 const prisma = new PrismaClient();
 
