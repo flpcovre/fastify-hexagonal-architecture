@@ -10,12 +10,9 @@ export class MessageController {
   ) {}
 
   public async index(request: FastifyRequest<{ Body: InboundMessageInput }>, reply: FastifyReply) {
-    await this.handleIncomingCustomerMessageUseCase.execute(request.body);
+    const message = await this.handleIncomingCustomerMessageUseCase.execute(request.body);
 
-    return reply.status(201).send({
-      id: request.body.id,
-      createdAt: new Date(),
-    });
+    return reply.status(201).send(message);
   }
 
   public async store(request: FastifyRequest<{ Body: CreateChatMessageInput, Params: ChatMessageParams }>, reply: FastifyReply) {

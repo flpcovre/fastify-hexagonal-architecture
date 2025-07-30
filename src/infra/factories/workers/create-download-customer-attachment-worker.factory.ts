@@ -1,5 +1,5 @@
 import { UpdateAttachmentStatusUseCase } from '@/domain/chat/use-cases/attachments/update-attachment-status.use-case';
-import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/attachment-repository.prisma';
+import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/attachment-repository.prisma';
 import { BullMQConsumer } from '@/infra/services/queues/bullmq/bullmq-consumer';
 import { DownloadCustomerAttachmentWorker } from '@/infra/services/workers/download-customer-attachment.worker';
 
