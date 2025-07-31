@@ -15,4 +15,12 @@ export const authResponseSchema = z.object({
   }),
 });
 
+export const profileResponseSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  email: z.string().email(),
+  role: z.string(),
+});
+
 export type AuthInput = z.infer<typeof authSchema>;
+export type ProfileResponse = z.infer<typeof profileResponseSchema>

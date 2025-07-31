@@ -10,8 +10,14 @@ export class AuthController {
   public async auth(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const { email, password } = request.body as AuthInput;
 
-    const user = this.authenticateUserUseCase.execute({ email, password });
+    const result = await this.authenticateUserUseCase.execute({ email, password });
 
-    return reply.status(201).send(user);
+    return reply.status(200).send(result);
+  }
+
+  public async me(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const user = request.authenticatedUser;
+
+    return reply.status(200).send(user);
   }
 }

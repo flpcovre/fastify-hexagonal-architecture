@@ -1,9 +1,14 @@
-export interface JwtPayload {
-  sub: string,
-  payload: unknown,
+import { User } from '@/domain/user/entities/user';
+
+export type UserJwtData = Pick<User, 'id' | 'name' | 'email' | 'role'>;
+
+export interface JwtPayload extends UserJwtData {
+  iat?: number;
+  exp?: number;
 }
 
 export interface JwtService {
-  sign(payload: JwtPayload): string,
-  verify<T extends JwtPayload = JwtPayload>(token: string): T,
+  sign(payload: UserJwtData): string;
+  verify<T extends JwtPayload = JwtPayload>(token: string): T;
+  extractUserData(payload: JwtPayload): UserJwtData;
 }

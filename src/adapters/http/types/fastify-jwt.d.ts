@@ -1,13 +1,18 @@
 import '@fastify/jwt';
+import { UserJwtData } from '@/shared/domain/ports/jwt-service';
 
 declare module '@fastify/jwt' {
   interface FastifyJWT {
-    payload: { sub: string; payload: unknown };
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      role: string;
+    payload: UserJwtData & {
+      iat?: number;
+      exp?: number;
     };
+    user: UserJwtData;
+  }
+}
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    authenticatedUser?: UserJwtData;
   }
 }
