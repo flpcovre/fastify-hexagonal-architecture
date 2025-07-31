@@ -1,5 +1,5 @@
 import { chatMessageParamsSchema, createChatMessageSchema, createMessageResponseSchema, inboundMessageResponseSchema, inboundMessageSchema } from '@/adapters/http/routes/messages/schema';
-import { FastifyTypedInstance } from '@/adapters/http/types';
+import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeMessageController } from '@/infra/factories/controllers/create-message-controller.factory';
 
 const messageController = makeMessageController();

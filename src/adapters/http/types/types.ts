@@ -25,6 +25,9 @@ export interface FastifyAppConfig {
     prefix: string;
     routesDir: string;
   };
+  auth: {
+    secret: string;
+  }
 }
 
 export interface FastifyAppBuilder {
@@ -33,5 +36,6 @@ export interface FastifyAppBuilder {
   setSwagger(config: FastifyAppConfig['swagger']): this;
   setSwaggerUi(config: FastifyAppConfig['swaggerUi']): this;
   setRoutes(config: FastifyAppConfig['api']): this;
+  setAuth(config: FastifyAppConfig['auth']): this;
   build(): FastifyInstance;
 }

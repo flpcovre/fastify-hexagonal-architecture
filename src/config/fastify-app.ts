@@ -1,4 +1,4 @@
-import { FastifyAppConfig } from '@/adapters/http/types';
+import { FastifyAppConfig } from '@/adapters/http/types/types';
 
 export const FASTIFY_APP_CONFIG: FastifyAppConfig = {
   cors: {
@@ -15,5 +15,8 @@ export const FASTIFY_APP_CONFIG: FastifyAppConfig = {
   api: {
     prefix: '/api',
     routesDir: './routes',
+  },
+  auth: {
+    secret: process.env.JWT_SECRET ?? 'secret',
   },
 } as const;

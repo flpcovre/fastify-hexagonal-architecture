@@ -4,9 +4,10 @@ import { validatorCompiler, serializerCompiler, ZodTypeProvider, jsonSchemaTrans
 import { fastifySwagger } from '@fastify/swagger';
 import { fastifySwaggerUi } from '@fastify/swagger-ui';
 import { join } from 'path';
-import { FastifyAppBuilder, FastifyAppConfig } from '@/adapters/http/types';
 import { FASTIFY_APP_CONFIG } from '@/config/fastify-app';
-import fastifyAutoload from '@fastify/autoload';
+import { fastifyAutoload } from '@fastify/autoload';
+import { fastifyJwt } from '@fastify/jwt';
+import { FastifyAppBuilder, FastifyAppConfig } from '@/adapters/http/types/types';
 
 class FastifyAppBuilderImpl implements FastifyAppBuilder {
   private app: FastifyInstance;
@@ -59,6 +60,13 @@ class FastifyAppBuilderImpl implements FastifyAppBuilder {
     return this;
   }
 
+  public setAuth(config: FastifyAppConfig['auth']): this {
+    this.app.register(fastifyJwt, {
+      secret: config.secret,
+    });
+    return this;
+  }
+
   public build(): FastifyInstance {
     return this.app;
   }
@@ -73,5 +81,6 @@ export async function createFastifyApp(config: Partial<FastifyAppConfig> = {}): 
     .setSwagger(finalConfig.swagger)
     .setSwaggerUi(finalConfig.swaggerUi)
     .setRoutes(finalConfig.api)
+    .setAuth(finalConfig.auth)
     .build();
 }
