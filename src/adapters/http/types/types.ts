@@ -27,6 +27,7 @@ export interface FastifyAppConfig {
   };
   auth: {
     secret: string;
+    expiresIn?: string;
   }
 }
 

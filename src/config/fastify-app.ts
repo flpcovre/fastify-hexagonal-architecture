@@ -18,5 +18,6 @@ export const FASTIFY_APP_CONFIG: FastifyAppConfig = {
   },
   auth: {
     secret: process.env.JWT_SECRET ?? 'secret',
+    expiresIn: process.env.JWT_EXPIRES,
   },
 } as const;

@@ -7,6 +7,8 @@ export const authSchema = z.object({
 
 export const authResponseSchema = z.object({
   token: z.string(),
+  expiresIn: z.string().describe('Tempo de expiração do token (ex: "24h", "7d")'),
+  expiresAt: z.string().describe('Data/hora de expiração do token em formato ISO'),
   user: z.object({
     id: z.string().uuid(),
     name: z.string(),
@@ -23,4 +25,3 @@ export const profileResponseSchema = z.object({
 });
 
 export type AuthInput = z.infer<typeof authSchema>;
-export type ProfileResponse = z.infer<typeof profileResponseSchema>

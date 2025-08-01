@@ -63,6 +63,9 @@ class FastifyAppBuilderImpl implements FastifyAppBuilder {
   public setAuth(config: FastifyAppConfig['auth']): this {
     this.app.register(fastifyJwt, {
       secret: config.secret,
+      sign: {
+        expiresIn: config.expiresIn,
+      },
     });
     return this;
   }

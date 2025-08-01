@@ -1,4 +1,3 @@
-import { authMiddleware } from '@/adapters/http/middlewares/auth.middleware';
 import { createUserResponseSchema, createUserSchema, getUserResponseSchema } from '@/adapters/http/routes/users/schema';
 import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeUserController } from '@/infra/factories/controllers/create-user-controller.factory';
@@ -18,7 +17,6 @@ const userRoutes: FastifyPluginCallback = async(app: FastifyTypedInstance) => {
   }, userController.index.bind(userController));
 
   app.post('/users', {
-    preHandler: authMiddleware,
     schema: {
       tags: ['users'],
       description: 'Create a new user',

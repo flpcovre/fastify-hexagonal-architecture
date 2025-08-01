@@ -9,7 +9,9 @@ interface AuthenticateUserInputDto {
 }
 
 interface AuthenticateUserOutputDto {
-  token: string,
+  token: string;
+  expiresIn: string;
+  expiresAt: string;
   user: Pick<User, 'id' | 'name' | 'email' | 'role'>;
 }
 
@@ -40,10 +42,12 @@ export class AuthenticateUserUseCase {
       role: user.role,
     };
 
-    const token = this.jwtService.sign(authUser);
+    const jwtResult = this.jwtService.sign(authUser);
 
     return {
-      token,
+      token: jwtResult.token,
+      expiresIn: jwtResult.expiresIn,
+      expiresAt: jwtResult.expiresAt,
       user: authUser,
     };
   }

@@ -7,8 +7,13 @@ export interface JwtPayload extends UserJwtData {
   exp?: number;
 }
 
+export interface JwtSignResult {
+  token: string;
+  expiresIn: string;
+  expiresAt: string;
+}
+
 export interface JwtService {
-  sign(payload: UserJwtData): string;
+  sign(payload: UserJwtData): JwtSignResult;
   verify<T extends JwtPayload = JwtPayload>(token: string): T;
-  extractUserData(payload: JwtPayload): UserJwtData;
 }
