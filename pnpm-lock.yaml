@@ -29,6 +29,12 @@ importers:
       '@scalar/fastify-api-reference':
         specifier: ^1.33.0
         version: 1.33.0
+      '@types/amqplib':
+        specifier: ^0.10.7
+        version: 0.10.7
+      amqplib:
+        specifier: ^0.10.8
+        version: 0.10.8
       argon2:
         specifier: ^0.43.0
         version: 0.43.0
@@ -602,6 +608,9 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
+  '@types/amqplib@0.10.7':
+    resolution: {integrity: sha512-IVj3avf9AQd2nXCx0PGk/OYq7VmHiyNxWFSb5HhU9ATh+i+gHWvVcljFTcTWQ/dyHJCTrzCixde+r/asL2ErDA==}
+
   '@types/bcrypt@5.0.2':
     resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
 
@@ -761,6 +770,10 @@ packages:
   ajv@8.17.1:
     resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
 
+  amqplib@0.10.8:
+    resolution: {integrity: sha512-Tfn1O9sFgAP8DqeMEpt2IacsVTENBpblB3SqLdn0jK2AeX8iyCvbptBc8lyATT9bQ31MsjVwUSQ1g8f4jHOUfw==}
+    engines: {node: '>=10'}
+
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
@@ -823,6 +836,9 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
+
+  buffer-more-ints@1.0.0:
+    resolution: {integrity: sha512-EMetuGFz5SLsT0QTnXzINh4Ksr+oo4i+UGTXEshiGCQWnsgSs7ZhJ8fzlwQ+OzEMs0MpDAMr1hxnblp5a4vcHg==}
 
   bullmq@5.56.2:
     resolution: {integrity: sha512-bq0PSxPCWeNlFBc5yjBs3eR+e6GxIEIeHY0xxq6WELzG65GPjL+A2ni1NS7NroKsur0C3UJdabw51IswiSTSYw==}
@@ -1519,6 +1535,9 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
+  querystringify@2.2.0:
+    resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
+
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
@@ -1547,6 +1566,9 @@ packages:
   require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
+
+  requires-port@1.0.0:
+    resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
 
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
@@ -1813,6 +1835,9 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  url-parse@1.5.10:
+    resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
@@ -2364,6 +2389,10 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
+  '@types/amqplib@0.10.7':
+    dependencies:
+      '@types/node': 22.15.30
+
   '@types/bcrypt@5.0.2':
     dependencies:
       '@types/node': 22.15.30
@@ -2569,6 +2598,11 @@ snapshots:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
+  amqplib@0.10.8:
+    dependencies:
+      buffer-more-ints: 1.0.0
+      url-parse: 1.5.10
+
   ansi-regex@5.0.1: {}
 
   ansi-regex@6.1.0: {}
@@ -2628,6 +2662,8 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
+
+  buffer-more-ints@1.0.0: {}
 
   bullmq@5.56.2:
     dependencies:
@@ -3342,6 +3378,8 @@ snapshots:
 
   punycode@2.3.1: {}
 
+  querystringify@2.2.0: {}
+
   queue-microtask@1.2.3: {}
 
   quick-format-unescaped@4.0.4: {}
@@ -3359,6 +3397,8 @@ snapshots:
   reflect-metadata@0.2.2: {}
 
   require-from-string@2.0.2: {}
+
+  requires-port@1.0.0: {}
 
   resolve-from@4.0.0: {}
 
@@ -3627,6 +3667,11 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  url-parse@1.5.10:
+    dependencies:
+      querystringify: 2.2.0
+      requires-port: 1.0.0
 
   uuid@9.0.1: {}
 

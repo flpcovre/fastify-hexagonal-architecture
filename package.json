@@ -44,6 +44,8 @@
     "@fastify/swagger-ui": "^5.2.3",
     "@prisma/client": "6.10.1",
     "@scalar/fastify-api-reference": "^1.33.0",
+    "@types/amqplib": "^0.10.7",
+    "amqplib": "^0.10.8",
     "argon2": "^0.43.0",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.56.2",
