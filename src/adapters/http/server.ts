@@ -61,6 +61,7 @@ class FastifyAppBuilderImpl implements FastifyAppBuilder {
       routePrefix: config.routePrefix,
       configuration: {
         theme: config.configuration.theme,
+        pageTitle: 'API Docs',
       },
     });
     return this;

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "tsx watch --env-file .env src/main.ts",
-    "build": "tsup src --format cjs --dts --outDir dist",
+    "build": "NODE_OPTIONS=\"--max-old-space-size=4096\" tsup src --format cjs --dts --outDir dist",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "test": "vitest",
