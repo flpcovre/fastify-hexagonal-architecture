@@ -14,20 +14,6 @@ services:
     depends_on:
       - postgres
     command: pnpm run dev
-  
-  workers:
-    container_name: workers
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app
-      - /app/node_modules
-    networks:
-      - web
-    depends_on:
-      - rabbitmq
-    command: pnpm run workers
 
   postgres:
     container_name: postgres
@@ -61,10 +47,31 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PSWD}
+    healthcheck:
+      test: rabbitmq-diagnostics --quiet check_running && rabbitmq-diagnostics --quiet check_local_alarms
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     networks:
       - web
+      
+  workers:
+    container_name: workers
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - web
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    command: pnpm run workers
 
 volumes:
   postgres_data:

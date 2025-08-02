@@ -1,6 +1,7 @@
+import { RabbitMQConnection } from '@/infra/services/queues/types';
 import { JobQueuePublisher } from '@/shared/domain/ports/job-queue-publisher';
-import { RabbitMQConnection } from './connection';
 import * as amqp from 'amqplib';
+
 
 export class RabbitMQPublisher implements JobQueuePublisher {
   private connection: amqp.ChannelModel | null = null;

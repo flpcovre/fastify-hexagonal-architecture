@@ -1,6 +1,7 @@
+import { RabbitMQConnection } from '@/infra/services/queues/types';
 import { JobQueueConsumer } from '@/shared/domain/ports/job-queue-consumer';
-import { RabbitMQConnection } from './connection';
 import * as amqp from 'amqplib';
+
 
 export class RabbitMQConsumer implements JobQueueConsumer {
   private connection: amqp.ChannelModel | null = null;
