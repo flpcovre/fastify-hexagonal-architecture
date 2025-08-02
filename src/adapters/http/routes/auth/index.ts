@@ -1,5 +1,5 @@
 import { authMiddleware } from '@/adapters/http/middlewares/auth.middleware';
-import { authResponseSchema, authSchema, profileResponseSchema } from '@/adapters/http/routes/auth/schema';
+import { authResponseSchema, authSchema, profileResponseSchema, unauthorizedErrorSchema } from '@/adapters/http/routes/auth/schema';
 import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeAuthController } from '@/infra/factories/controllers/create-auth-controller.factory';
 
@@ -20,8 +20,11 @@ export async function authRoutes(app: FastifyTypedInstance) {
     preHandler: [authMiddleware],
     schema: {
       tags: ['auth'],
+      security: [{ bearerAuth: [] }],
+      description: 'Obter informações do usuário autenticado',
       response: {
         200: profileResponseSchema,
+        401: unauthorizedErrorSchema,
       },
     },
   }, authController.me.bind(authController));

@@ -18,9 +18,6 @@ export interface FastifyAppConfig {
     version: string;
     description?: string;
   };
-  swaggerUi: {
-    routePrefix: string;
-  };
   api: {
     prefix: string;
     routesDir: string;
@@ -28,15 +25,21 @@ export interface FastifyAppConfig {
   auth: {
     secret: string;
     expiresIn?: string;
-  }
+  },
+  apiReference: {
+    routePrefix?: `/${string}` | undefined
+    configuration: {
+      theme?: 'default' | 'kepler' | 'alternate' | 'moon' | 'purple' | 'solarized' | 'bluePlanet' | 'deepSpace' | 'saturn' | 'elysiajs' | 'fastify' | 'mars' | 'laserwave' | 'none' | undefined;
+    };
+  };
 }
 
 export interface FastifyAppBuilder {
   setValidators(): this;
   setCors(config: FastifyAppConfig['cors']): this;
   setSwagger(config: FastifyAppConfig['swagger']): this;
-  setSwaggerUi(config: FastifyAppConfig['swaggerUi']): this;
   setRoutes(config: FastifyAppConfig['api']): this;
   setAuth(config: FastifyAppConfig['auth']): this;
+  setApiReference(config: FastifyAppConfig['apiReference']): this;
   build(): FastifyInstance;
 }

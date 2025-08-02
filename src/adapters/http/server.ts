@@ -2,12 +2,16 @@ import { fastify, FastifyInstance } from 'fastify';
 import { fastifyCors } from '@fastify/cors';
 import { validatorCompiler, serializerCompiler, ZodTypeProvider, jsonSchemaTransform } from 'fastify-type-provider-zod';
 import { fastifySwagger } from '@fastify/swagger';
-import { fastifySwaggerUi } from '@fastify/swagger-ui';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { FASTIFY_APP_CONFIG } from '@/config/fastify-app';
 import { fastifyAutoload } from '@fastify/autoload';
 import { fastifyJwt } from '@fastify/jwt';
+import scalarFastifyApiReference from '@scalar/fastify-api-reference';
 import { FastifyAppBuilder, FastifyAppConfig } from '@/adapters/http/types/types';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 class FastifyAppBuilderImpl implements FastifyAppBuilder {
   private app: FastifyInstance;
@@ -35,15 +39,29 @@ class FastifyAppBuilderImpl implements FastifyAppBuilder {
           version: config.version,
           description: config.description,
         },
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'JWT',
+              description: 'JWT token de autenticação',
+            },
+          },
+        },
       },
       transform: jsonSchemaTransform,
     });
+
     return this;
   }
 
-  public setSwaggerUi(config: FastifyAppConfig['swaggerUi']): this {
-    this.app.register(fastifySwaggerUi, {
+  public setApiReference(config: FastifyAppConfig['apiReference']): this {
+    this.app.register(scalarFastifyApiReference, {
       routePrefix: config.routePrefix,
+      configuration: {
+        theme: config.configuration.theme,
+      },
     });
     return this;
   }
@@ -54,7 +72,7 @@ class FastifyAppBuilderImpl implements FastifyAppBuilder {
       options: {
         prefix: config.prefix,
       },
-      forceESM: false,
+      forceESM: true,
       dirNameRoutePrefix: false,
     });
     return this;
@@ -82,8 +100,8 @@ export async function createFastifyApp(config: Partial<FastifyAppConfig> = {}): 
     .setValidators()
     .setCors(finalConfig.cors)
     .setSwagger(finalConfig.swagger)
-    .setSwaggerUi(finalConfig.swaggerUi)
     .setRoutes(finalConfig.api)
     .setAuth(finalConfig.auth)
+    .setApiReference(finalConfig.apiReference)
     .build();
 }

@@ -24,4 +24,9 @@ export const profileResponseSchema = z.object({
   role: z.string(),
 });
 
+export const unauthorizedErrorSchema = z.object({
+  message: z.string(),
+  error: z.string(),
+});
+
 export type AuthInput = z.infer<typeof authSchema>;

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "prisma": {
     "seed": "tsx src/infra/database/prisma/seeders/seed.ts"
   },
@@ -13,7 +14,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "workers": "tsx watch src/infra/services/workers/workers.ts"
+    "workers": "tsx watch --tsconfig tsx.config.json src/infra/services/workers/workers.ts"
   },
   "keywords": [],
   "author": "",
@@ -42,6 +43,7 @@
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.3",
     "@prisma/client": "6.10.1",
+    "@scalar/fastify-api-reference": "^1.33.0",
     "argon2": "^0.43.0",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.56.2",
