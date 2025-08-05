@@ -1,5 +1,5 @@
 import { createCustomerResponseSchema, createCustomerSchema, getCustomerResponseSchema } from '@/adapters/http/routes/customers/schema';
-import { FastifyTypedInstance } from '@/adapters/http/types';
+import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeCustomerController } from '@/infra/factories/controllers/create-customer-controller.factory';
 import { FastifyPluginCallback } from 'fastify';
 

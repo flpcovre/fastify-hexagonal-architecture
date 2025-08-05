@@ -14,8 +14,8 @@ export class UserController {
     return reply.status(200).send(users);
   }
 
-  public async store(request: FastifyRequest<{ Body: CreateUserInput }>, reply: FastifyReply): Promise<void> {
-    const { name, email, password, role } = request.body;
+  public async store(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+    const { name, email, password, role } = request.body as CreateUserInput;
 
     const user = await this.createUserUseCase.execute({ name, email, password, role });
 
