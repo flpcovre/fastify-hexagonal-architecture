@@ -4,7 +4,7 @@ import { validatorCompiler, serializerCompiler, ZodTypeProvider, jsonSchemaTrans
 import { fastifySwagger } from '@fastify/swagger';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { FASTIFY_APP_CONFIG } from '@/config/fastify-app';
+import { FASTIFY_APP_CONFIG } from '@/config/fastify-app.config';
 import { fastifyAutoload } from '@fastify/autoload';
 import { fastifyJwt } from '@fastify/jwt';
 import scalarFastifyApiReference from '@scalar/fastify-api-reference';

@@ -1,11 +1,6 @@
-import { BullMQConsumer } from '@/infra/services/queues/bullmq/bullmq-consumer';
+import { GlobalQueueConsumer } from '@/infra/services/queues/queue';
 import { SendUserMessageWorker } from '@/infra/services/workers/send-user-message.worker';
 
 export function makeSendUserMessageWorker(): SendUserMessageWorker {
-  const jobQueueConsumer = new BullMQConsumer({
-    host: 'redis',
-    port: 6379,
-  });
-
-  return new SendUserMessageWorker(jobQueueConsumer);
+  return new SendUserMessageWorker(GlobalQueueConsumer);
 }
