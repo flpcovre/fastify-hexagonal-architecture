@@ -73,6 +73,30 @@ services:
         condition: service_healthy
     command: pnpm run workers
 
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - ~/.n8n:/home/node/.n8n
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_EDITOR_BASE_URL=${WEBHOOK_URL}
+      - WEBHOOK_URL=${WEBHOOK_URL}
+    restart: always
+    networks:
+      - web
+    
+  ngrok:
+    image: ngrok/ngrok:latest
+    network_mode: "host"
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    command: http --domain=${WEBHOOK_DOMAIN} 5678
+    stdin_open: true
+    tty: true
+
 volumes:
   postgres_data:
   redisdata:
