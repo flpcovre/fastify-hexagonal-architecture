@@ -1,9 +1,7 @@
-import { MessageController } from '@/adapters/controllers/message.controller';
 import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/handle-incoming-customer-message.use-case';
 import { CreateCustomerAttachmentUseCase } from '@/domain/chat/use-cases/attachments/create-customer-attachment.use-case';
 import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/chats/find-active-customer-chat.use-case';
 import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';
-import { CreateUserMessageUseCase } from '@/domain/chat/use-cases/messages/create-user-message.use-case';
 import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-customer.use-case';
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
 import { AttachmentRepositoryPrisma } from '@/infra/database/prisma/repositories/chat/attachment-repository.prisma';
@@ -18,10 +16,11 @@ import { HandleCustomerSessionFlowUseCase } from '@/domain/flow/use-cases/handle
 import { FlowNavigatorUseCase } from '@/domain/flow/use-cases/flow-navigator.use-case';
 import { FindInitialFlowUseCase } from '@/domain/flow/use-cases/find-initial-flow.use-case';
 import { WhatsAppMessageMapperInstance } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
+import { ReceiveIncomingCustomerMessageUseCase } from '@/application/use-cases/receive-incoming-customer-message.use-case';
+import { ReceiveCustomerMessageWorker } from '@/infra/services/workers/receive-customer-message.worker';
+import { GlobalQueueConsumer } from '@/infra/services/queues/queue';
 
-
-export function makeMessageController() {
-
+export function makeReceiveCustomerMessageWorker(): ReceiveCustomerMessageWorker {
   const customerRepository = new CustomerRepositoryPrisma();
   const chatRepository = new ChatRepositoryPrisma();
   const messageRepository = new MessageRepositoryPrisma();
@@ -30,7 +29,6 @@ export function makeMessageController() {
   const flowOptionRepository = new FlowOptionRepositoryPrisma();
   const flowRepository = new FlowRepositoryPrisma();
 
-  const createUserMessageUseCase = new CreateUserMessageUseCase(messageRepository, eventBus);
   const findCustomerUseCase = new FindCustomerUseCase(customerRepository);
   const createCustomerUseCase = new CreateCustomerUseCase(customerRepository);
   const findActiveCustomerChatUseCase = new FindActiveCustomerChatUseCase(chatRepository);
@@ -48,9 +46,13 @@ export function makeMessageController() {
     handleCustomerSessionFlowUseCase,
   );
 
-  return new MessageController(
-    createUserMessageUseCase,
+  const receiveIncomingCustomerMessageUseCase = new ReceiveIncomingCustomerMessageUseCase(
     handleIncomingCustomerMessageUseCase,
     WhatsAppMessageMapperInstance,
+  );
+
+  return new ReceiveCustomerMessageWorker(
+    GlobalQueueConsumer,
+    receiveIncomingCustomerMessageUseCase,
   );
 }

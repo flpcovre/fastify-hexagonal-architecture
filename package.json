@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "workers": "tsx watch --tsconfig tsx.config.json src/infra/services/workers/workers.ts"
+    "workers": "tsx watch --env-file .env src/infra/services/workers/workers.ts"
   },
   "keywords": [],
   "author": "",

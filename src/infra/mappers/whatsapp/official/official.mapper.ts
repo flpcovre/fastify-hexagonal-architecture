@@ -1,86 +1,63 @@
 import { InboundCustomerMessageDto } from '@/application/dtos/inbound-customer-message.dto';
-import { MessageMapper } from '@/infra/mappers/whatsapp/message.mapper';
+import { OfficialPayload } from '@/infra/mappers/whatsapp/official/ports/official-messages.port';
+import { WhatsAppMessageMapper } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
 
-interface Contact {
-  profile: {
-    name: string
-  }
-}
+export class OfficialMapper implements WhatsAppMessageMapper<OfficialPayload> {
+  public toDomain(payload: OfficialPayload): InboundCustomerMessageDto {
+    const value = payload.entry[0].changes[0].value;
+    const message = value.messages[0];
+    const contact = value.contacts[0];
 
-type OfficialWhatsAppMessage =
-  | TextMessage
-  | ImageMessage
-  | VideoMessage
-  | AudioMessage
-  | DocumentMessage;
-
-interface BaseMessage {
-  id: string;
-  from: string;
-  timestamp: string;
-  type: string;
-}
-
-interface TextMessage extends BaseMessage {
-  type: 'text';
-  text: { body: string };
-}
-
-interface ImageMessage extends BaseMessage {
-  type: 'image';
-  image: {
-    caption?: string;
-    mime_type: string;
-    sha256: string;
-    id: string;
-  };
-}
-
-interface VideoMessage extends BaseMessage {
-  type: 'video';
-  video: {
-    caption?: string;
-    mime_type: string;
-    sha256: string;
-    id: string;
-  };
-}
-
-interface AudioMessage extends BaseMessage {
-  type: 'audio';
-  audio: {
-    mime_type: string;
-    sha256: string;
-    id: string;
-  };
-}
-
-interface DocumentMessage extends BaseMessage {
-  type: 'document';
-  document: {
-    mime_type: string;
-    sha256: string;
-    id: string;
-    filename?: string;
-  };
-}
-
-export class OfficialMapper implements MessageMapper<OfficialWhatsAppMessage> {
-  public toDomain(rawData: OfficialWhatsAppMessage): InboundCustomerMessageDto {
-    return {
-      id: rawData.,
-      name: rawData.sender_name,
-      from: rawData.from_number,
-      timestamp: rawData.received_at,
-      type: this.mapMessageType(rawData.message_type),
-      content: rawData.text_content,
-      media: rawData.media_content ? {
-        id: rawData.media_content.id,
-        type: this.mapMessageType(rawData.media_content.type),
-        mimeType: rawData.media_content.mime_type,
-        fileName: rawData.media_content.file_name,
-        mediaKey: rawData.media_content.media_key
-      } : undefined,
+    const baseDto = {
+      id: message.id,
+      name: contact.profile.name,
+      from: message.from,
+      timestamp: message.timestamp,
+      type: message.type,
+      content: '',
     };
-  }
+
+    switch (message.type) {
+    case 'text':
+      return {
+        ...baseDto,
+        content: message.text.body,
+      };
+
+    case 'image':
+      return {
+        ...baseDto,
+        content: message.image.caption ?? '',
+        media: {
+          id: message.image.id,
+          type: 'image',
+          mimeType: message.image.mime_type,
+        },
+      };
+
+    case 'audio':
+      return {
+        ...baseDto,
+        media: {
+          id: message.audio.id,
+          type: 'audio',
+          mimeType: message.audio.mime_type,
+        },
+      };
+
+    case 'document':
+      return {
+        ...baseDto,
+        media: {
+          id: message.document.id,
+          type: 'document',
+          mimeType: message.document.mime_type,
+          fileName: message.document.filename,
+        },
+      };
+
+    default:
+      throw new Error('Unsupported message type.');
+    }
+  };
 }

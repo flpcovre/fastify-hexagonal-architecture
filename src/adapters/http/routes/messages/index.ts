@@ -9,10 +9,10 @@ export async function messagesRoutes(app: FastifyTypedInstance) {
     schema: {
       tags: ['messages'],
       description: 'Receive a new message from a customer',
-      body: inboundMessageSchema,
-      response: {
-        201: inboundMessageResponseSchema,
-      },
+      // body: inboundMessageSchema,
+      // response: {
+      //   201: inboundMessageResponseSchema,
+      // },
     },
   }, messageController.index.bind(messageController));
 
