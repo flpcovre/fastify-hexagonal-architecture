@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const messageTypeSchema = z.enum(['text', 'image', 'audio', 'file']);
+export const messageTypeSchema = z.enum(['text', 'image', 'audio', 'document']);
 
 export const chatMessageParamsSchema = z.object({
   chatId: z.string().uuid(),
