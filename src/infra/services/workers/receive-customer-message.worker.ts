@@ -2,7 +2,7 @@ import { ReceiveIncomingCustomerMessageUseCase } from '@/application/use-cases/r
 import { JobQueueConsumer } from '@/shared/domain/ports/job-queue-consumer';
 
 interface Request {
-  body: object;
+  payload: object;
 }
 
 export class ReceiveCustomerMessageWorker {
@@ -13,10 +13,7 @@ export class ReceiveCustomerMessageWorker {
 
   public register(): void {
     this.consumer.consume<Request>('receive-customer-message-queue', async(req) => {
-      const request = req.body;
-      await this.receiveIncomingCustomerMessageUseCase.execute(request);
-
-      // console.log(JSON.stringify(request));
+      await this.receiveIncomingCustomerMessageUseCase.execute(req);
     });
   }
 }

@@ -6,19 +6,17 @@ type OfficialWhatsAppMessage =
   | AudioMessage
   | DocumentMessage;
 
-export interface OfficialPayload {
-  entry: OfficialPayloadChanges[],
-}
+// export interface OfficialPayload {
+//   entry: OfficialPayloadChanges[],
+// }
 
-interface OfficialPayloadChanges {
-  changes: OfficialPayloadMessage[];
-}
+// interface OfficialPayloadChanges {
+//   changes: OfficialPayloadMessage[];
+// }
 
-interface OfficialPayloadMessage {
-  value: {
-    contacts: Contact[];
-    messages: OfficialWhatsAppMessage[];
-  }
+export interface OfficialPayloadMessage {
+  contacts: Contact[];
+  messages: OfficialWhatsAppMessage[];
 }
 
 interface Contact {

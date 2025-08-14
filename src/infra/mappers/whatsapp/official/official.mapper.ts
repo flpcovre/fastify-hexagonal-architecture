@@ -1,12 +1,11 @@
 import { InboundCustomerMessageDto } from '@/application/dtos/inbound-customer-message.dto';
-import { OfficialPayload } from '@/infra/mappers/whatsapp/official/ports/official-messages.port';
+import { OfficialPayloadMessage } from '@/infra/mappers/whatsapp/official/ports/official-messages.port';
 import { WhatsAppMessageMapper } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
 
-export class OfficialMapper implements WhatsAppMessageMapper<OfficialPayload> {
-  public toDomain(payload: OfficialPayload): InboundCustomerMessageDto {
-    const value = payload.entry[0].changes[0].value;
-    const message = value.messages[0];
-    const contact = value.contacts[0];
+export class OfficialMapper implements WhatsAppMessageMapper<OfficialPayloadMessage> {
+  public toDomain(payload: OfficialPayloadMessage): InboundCustomerMessageDto {
+    const message = payload.messages[0];
+    const contact = payload.contacts[0];
 
     const baseDto = {
       id: message.id,

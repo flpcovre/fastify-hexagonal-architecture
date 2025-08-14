@@ -5,7 +5,6 @@ import { CreateCustomerUseCase } from '@/domain/customer/use-cases/create-custom
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
 import { HandleCustomerSessionFlowUseCase } from '@/domain/flow/use-cases/handle-customer-session-flow.use-case';
 
-
 interface HandleIncomingCustomerMessageOutputDto {
   id?: string,
   createdAt?: Date
