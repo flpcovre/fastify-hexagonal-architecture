@@ -1,5 +1,5 @@
 import { chatMessageParamsSchema, createChatMessageSchema, createMessageResponseSchema, inboundMessageResponseSchema, inboundMessageSchema } from '@/adapters/http/routes/messages/schema';
-import { FastifyTypedInstance } from '@/adapters/http/types';
+import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeMessageController } from '@/infra/factories/controllers/create-message-controller.factory';
 
 const messageController = makeMessageController();
@@ -9,10 +9,10 @@ export async function messagesRoutes(app: FastifyTypedInstance) {
     schema: {
       tags: ['messages'],
       description: 'Receive a new message from a customer',
-      body: inboundMessageSchema,
-      response: {
-        201: inboundMessageResponseSchema,
-      },
+      // body: inboundMessageSchema,
+      // response: {
+      //   201: inboundMessageResponseSchema,
+      // },
     },
   }, messageController.index.bind(messageController));
 

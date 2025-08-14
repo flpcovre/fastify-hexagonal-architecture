@@ -1,5 +1,7 @@
 import { Message, MessageType } from '@/domain/chat/entities/message';
+import { UserMessageCreatedEvent } from '@/domain/chat/events/user-message-created.event';
 import { MessageRepository } from '@/domain/chat/ports/message-repository';
+import { EventBus } from '@/shared/domain/ports/event-bus';
 import { randomUUID } from 'crypto';
 
 interface CreateUserMessageInputDto {
@@ -17,6 +19,7 @@ interface CreateUserMessageOutputDto {
 export class CreateUserMessageUseCase {
   constructor(
     private readonly messageRepository: MessageRepository,
+    private readonly eventBus: EventBus,
   ) {}
 
   public async execute(input: CreateUserMessageInputDto): Promise<CreateUserMessageOutputDto> {
@@ -33,6 +36,7 @@ export class CreateUserMessageUseCase {
     });
 
     await this.messageRepository.create(message);
+    await this.eventBus.publish(new UserMessageCreatedEvent(message));
 
     return {
       id: message.id,

@@ -1,4 +1,4 @@
-import { EventBus } from '@/shared/domain/ports/event-bus';
+import { EventBus, EventClassConstructor } from '@/shared/domain/ports/event-bus';
 import { EventEmitter } from 'events';
 
 class SimpleEventBus implements EventBus {
@@ -8,7 +8,7 @@ class SimpleEventBus implements EventBus {
     this.emitter.emit(event.constructor.name, event);
   }
 
-  public subscribe<T>(eventClass: new (...args: unknown[]) => T, handler: (event: T) => void): void {
+  public subscribe<T>(eventClass: EventClassConstructor<T>, handler: (event: T) => void): void {
     this.emitter.on(eventClass.name, handler);
   }
 }

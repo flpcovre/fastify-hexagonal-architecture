@@ -1,5 +1,5 @@
 import { createChatResponseSchema, createChatSchema } from '@/adapters/http/routes/chats/schema';
-import { FastifyTypedInstance } from '@/adapters/http/types';
+import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeChatController } from '@/infra/factories/controllers/create-chat-controller.factory';
 
 const chatController = makeChatController();

@@ -1,6 +1,6 @@
 import { Message, MessageType } from '@/domain/chat/entities/message';
 import { MessageRepository } from '@/domain/chat/ports/message-repository';
-import { CreateAttachmentUseCase } from '@/domain/chat/use-cases/attachments/create-attachment.use-case';
+import { CreateCustomerAttachmentUseCase } from '@/domain/chat/use-cases/attachments/create-customer-attachment.use-case';
 import { randomUUID } from 'crypto';
 
 interface CreateCustomerMessageInputDto {
@@ -17,13 +17,18 @@ interface CreateCustomerMessageInputDto {
   };
 }
 
+interface CreateCustomerMessageOutputDto {
+  id: string,
+  createdAt: Date
+}
+
 export class CreateCustomerMessageUseCase {
   constructor(
     private readonly messageRepository: MessageRepository,
-    private readonly createAttachmentUseCase: CreateAttachmentUseCase,
+    private readonly createCustomerAttachmentUseCase: CreateCustomerAttachmentUseCase,
   ) {}
 
-  public async execute(input: CreateCustomerMessageInputDto): Promise<void> {
+  public async execute(input: CreateCustomerMessageInputDto): Promise<CreateCustomerMessageOutputDto> {
     const message = Message.make({
       id: randomUUID(),
       chatId: input.chatId,
@@ -39,7 +44,7 @@ export class CreateCustomerMessageUseCase {
     await this.messageRepository.create(message);
 
     if (input.media) {
-      await this.createAttachmentUseCase.execute({
+      await this.createCustomerAttachmentUseCase.execute({
         messageId: message.id,
         type: input.media.type,
         mimeType: input.media.mimeType,
@@ -47,5 +52,10 @@ export class CreateCustomerMessageUseCase {
         mediaKey: input.media.mediaKey,
       });
     }
+
+    return {
+      id: message.id,
+      createdAt: message.createdAt,
+    };
   }
 }

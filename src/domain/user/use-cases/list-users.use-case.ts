@@ -4,7 +4,7 @@ interface ListUsersOutputDto {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'customer' | 'seller';
+  role: 'admin' | 'supervisor' | 'attendant';
   createdAt: Date;
 }
 

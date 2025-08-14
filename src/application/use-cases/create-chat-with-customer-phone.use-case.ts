@@ -1,4 +1,4 @@
-import { CreateChatUseCase } from '@/domain/chat/use-cases/create-chat.use-case';
+import { CreateChatUseCase } from '@/domain/chat/use-cases/chats/create-chat.use-case';
 import { FindCustomerUseCase } from '@/domain/customer/use-cases/find-customer.use-case';
 
 interface CreateChatWithCustomerPhoneInputDto {

@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const messageTypeSchema = z.enum(['text', 'image', 'audio', 'file']);
+export const messageTypeSchema = z.enum(['text', 'image', 'audio', 'document']);
 
 export const chatMessageParamsSchema = z.object({
   chatId: z.string().uuid(),
@@ -34,8 +34,10 @@ export const inboundMessageSchema = z.object({
 });
 
 export const inboundMessageResponseSchema = z.object({
-  id: z.string(),
-  createdAt: z.date(),
+  id: z.string().optional(),
+  createdAt: z.date().optional(),
+  reply: z.string().optional(),
+  isTerminal: z.boolean().optional(),
 }).describe('Message created successfully');
 
 export type CreateChatMessageInput = z.infer<typeof createChatMessageSchema>;
