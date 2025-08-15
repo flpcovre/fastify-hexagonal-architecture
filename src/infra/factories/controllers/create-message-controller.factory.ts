@@ -1,5 +1,5 @@
 import { MessageController } from '@/adapters/controllers/message.controller';
-import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/handle-incoming-customer-message.use-case';
+import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/message/handle-incoming-customer-message.use-case';
 import { CreateCustomerAttachmentUseCase } from '@/domain/chat/use-cases/attachments/create-customer-attachment.use-case';
 import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/chats/find-active-customer-chat.use-case';
 import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';

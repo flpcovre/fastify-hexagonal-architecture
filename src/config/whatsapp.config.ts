@@ -1,4 +1,4 @@
-import { WhatsAppIntegrations } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
+import { WhatsAppIntegrations } from '@/infra/services/whatsapp/whatsapp';
 
 export const getActiveWhatsAppIntegration = (): WhatsAppIntegrations => {
   const type = process.env.WHATSAPP_INTEGRATION as WhatsAppIntegrations;

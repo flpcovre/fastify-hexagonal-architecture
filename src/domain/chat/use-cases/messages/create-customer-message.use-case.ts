@@ -49,7 +49,7 @@ export class CreateCustomerMessageUseCase {
         type: input.media.type,
         mimeType: input.media.mimeType,
         fileName: input.media.fileName,
-        mediaKey: input.media.mediaKey,
+        mediaKey: input.media.id,
       });
     }
 

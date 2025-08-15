@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { CreateChatInput } from '@/adapters/http/routes/chats/schema';
-import { CreateChatWithCustomerPhoneUseCase } from '@/application/use-cases/create-chat-with-customer-phone.use-case';
+import { CreateChatWithCustomerPhoneUseCase } from '@/application/use-cases/chats/create-chat-with-customer-phone.use-case';
 
 export class ChatController {
   constructor(

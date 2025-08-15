@@ -1,4 +1,4 @@
-import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/handle-incoming-customer-message.use-case';
+import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/message/handle-incoming-customer-message.use-case';
 import { CreateCustomerAttachmentUseCase } from '@/domain/chat/use-cases/attachments/create-customer-attachment.use-case';
 import { FindActiveCustomerChatUseCase } from '@/domain/chat/use-cases/chats/find-active-customer-chat.use-case';
 import { CreateCustomerMessageUseCase } from '@/domain/chat/use-cases/messages/create-customer-message.use-case';
@@ -16,9 +16,9 @@ import { HandleCustomerSessionFlowUseCase } from '@/domain/flow/use-cases/handle
 import { FlowNavigatorUseCase } from '@/domain/flow/use-cases/flow-navigator.use-case';
 import { FindInitialFlowUseCase } from '@/domain/flow/use-cases/find-initial-flow.use-case';
 import { WhatsAppMessageMapperInstance } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
-import { ReceiveIncomingCustomerMessageUseCase } from '@/application/use-cases/receive-incoming-customer-message.use-case';
 import { ReceiveCustomerMessageWorker } from '@/infra/services/workers/receive-customer-message.worker';
 import { GlobalQueueConsumer } from '@/infra/services/queues/queue';
+import { ReceiveIncomingCustomerMessageUseCase } from '@/application/use-cases/message/receive-incoming-customer-message.use-case';
 
 export function makeReceiveCustomerMessageWorker(): ReceiveCustomerMessageWorker {
   const customerRepository = new CustomerRepositoryPrisma();

@@ -1,4 +1,4 @@
-import { ReceiveIncomingCustomerMessageUseCase } from '@/application/use-cases/receive-incoming-customer-message.use-case';
+import { ReceiveIncomingCustomerMessageUseCase } from '@/application/use-cases/message/receive-incoming-customer-message.use-case';
 import { JobQueueConsumer } from '@/shared/domain/ports/job-queue-consumer';
 
 interface Request {

@@ -1,4 +1,5 @@
-import { WhatsAppIntegrations, WhatsAppMessageMapper, WHATSAPP_MAPPERS } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
+import { WhatsAppMessageMapper, WHATSAPP_MAPPERS } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
+import { WhatsAppIntegrations } from '@/infra/services/whatsapp/whatsapp';
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class WhatsAppMessageMapperFactory {

@@ -1,5 +1,5 @@
 import { ChatMessageParams, CreateChatMessageInput } from '@/adapters/http/routes/messages/schema';
-import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/handle-incoming-customer-message.use-case';
+import { HandleIncomingCustomerMessageUseCase } from '@/application/use-cases/message/handle-incoming-customer-message.use-case';
 import { CreateUserMessageUseCase } from '@/domain/chat/use-cases/messages/create-user-message.use-case';
 import { WhatsAppMessageMapper } from '@/infra/mappers/whatsapp/whatsapp-message.mapper';
 import { FastifyReply, FastifyRequest } from 'fastify';
