@@ -1,8 +1,7 @@
 import { InboundCustomerMessageDto } from '@/application/dtos/inbound-customer-message.dto';
-import { getActiveWhatsAppIntegration } from '@/config/whatsapp.config';
+import { WhatsAppIntegrations, WHATSAPP_INTEGRATION } from '@/config/whatsapp.config';
 import { WhatsAppMessageMapperFactory } from '@/infra/factories/mappers/whatsapp-message-mapper.factory';
 import { OfficialMapper } from '@/infra/mappers/whatsapp/official/official.mapper';
-import { WhatsAppIntegrations } from '@/infra/services/whatsapp/whatsapp';
 
 export interface WhatsAppMessageMapper<T> {
   toDomain(payload: T): InboundCustomerMessageDto;
@@ -13,4 +12,4 @@ export const WHATSAPP_MAPPERS: Record<WhatsAppIntegrations, WhatsAppMessageMappe
 };
 
 export const WhatsAppMessageMapperInstance: WhatsAppMessageMapper<unknown> =
-  WhatsAppMessageMapperFactory.create(getActiveWhatsAppIntegration());
+  WhatsAppMessageMapperFactory.create(WHATSAPP_INTEGRATION);

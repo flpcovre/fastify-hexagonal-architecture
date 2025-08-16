@@ -1,6 +1,8 @@
-import { WhatsAppIntegrations } from '@/infra/services/whatsapp/whatsapp';
+export enum WhatsAppIntegrations {
+  OFFICIAL = 'official'
+};
 
-export const getActiveWhatsAppIntegration = (): WhatsAppIntegrations => {
+const getActiveWhatsAppIntegration = (): WhatsAppIntegrations => {
   const type = process.env.WHATSAPP_INTEGRATION as WhatsAppIntegrations;
 
   if (!Object.values(WhatsAppIntegrations).includes(type)) {
@@ -9,3 +11,5 @@ export const getActiveWhatsAppIntegration = (): WhatsAppIntegrations => {
 
   return type;
 };
+
+export const WHATSAPP_INTEGRATION = getActiveWhatsAppIntegration();
