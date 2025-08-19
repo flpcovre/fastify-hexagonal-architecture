@@ -15,6 +15,7 @@ export type QueryParams = Record<string, QueryValue>;
 export interface HttpRequestOptions<TBody = unknown> {
   url: string;
   method: HttpMethod;
+  baseUrl?: string;
   headers?: HttpHeaders;
   body?: TBody;
   query?: QueryParams;

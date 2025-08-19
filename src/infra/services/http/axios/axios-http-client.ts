@@ -16,7 +16,7 @@ export class AxiosHttpClient implements HttpClient {
 
     try {
       const res = await this.axios.request<TResponse>({
-        url: options.url,
+        url: options.baseUrl ? options.baseUrl + options.url : options.url,
         method: options.method,
         headers: options.headers,
         params: options.query,
