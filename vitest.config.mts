@@ -1,14 +1,18 @@
 import path from 'path';
 import { defineConfig } from 'vitest/config';
+import { config } from 'dotenv';
+config({ path: '.env.test' });
 
-export default defineConfig({
-  test: {
-    globals: true, // permite usar describe/test/expect sem importar
-    environment: 'node',
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
+export default defineConfig(() => {
+  return {
+    test: {
+      globals: true,
+      environment: 'node',
     },
-  },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
+    },
+  };
 });

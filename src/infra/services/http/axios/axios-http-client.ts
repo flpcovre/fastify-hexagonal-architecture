@@ -1,9 +1,15 @@
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequestOptions, HttpResponse } from '@/infra/services/http/http-service';
-import { Axios } from 'axios';
+import { AxiosInstance, default as axiosDefault } from 'axios';
 
 export class AxiosHttpClient implements HttpClient {
-  private readonly axios = new Axios();
+  private readonly axios: AxiosInstance;
   private interceptors: HttpInterceptor[] = [];
+
+  constructor() {
+    this.axios = axiosDefault.create({
+      responseType: 'json',
+    });
+  }
 
   public use(interceptor: HttpInterceptor): void {
     this.interceptors.push(interceptor);
@@ -16,12 +22,16 @@ export class AxiosHttpClient implements HttpClient {
 
     try {
       const res = await this.axios.request<TResponse>({
-        url: options.baseUrl ? options.baseUrl + options.url : options.url,
+        url: options.ignoreBaseUrl
+          ? options.url
+          : options.baseUrl
+            ? options.baseUrl + options.url
+            : options.url,
         method: options.method,
         headers: options.headers,
         params: options.query,
         data: options.body,
-        responseType: options.responseType,
+        responseType: options.responseType ?? 'json',
       });
 
       const response: HttpResponse<TResponse> = {
@@ -34,8 +44,8 @@ export class AxiosHttpClient implements HttpClient {
       };
 
       return response;
-    } catch (e) {
-      throw new Error(`Error: ${e}`);
+    } catch (error) {
+      throw new Error(`${error}`);
     }
   };
 

@@ -20,6 +20,7 @@ export interface HttpRequestOptions<TBody = unknown> {
   body?: TBody;
   query?: QueryParams;
   responseType?: ResponseType;
+  ignoreBaseUrl?: boolean;
 }
 
 export interface HttpResponse<TData = unknown> {
