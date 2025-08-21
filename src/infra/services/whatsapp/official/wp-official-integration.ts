@@ -41,14 +41,14 @@ export class WPOfficialService implements WhatsAppService {
     this.http.use(interceptor);
   }
 
-  public async retrieveMediaUrl(id: string): Promise<OfficialRetrieveMediaUrlResponse> {
+  private async retrieveMediaUrl(id: string): Promise<OfficialRetrieveMediaUrlResponse> {
     const response = await this.http.get<OfficialRetrieveMediaUrlResponse>(id);
     return response.data;
   }
 
   public async downloadMedia(id: string): Promise<DownloadMediaResponse> {
     const retrieveMediaResponse   = await this.retrieveMediaUrl(id);
-    const downloadedMediaResponse = await this.http.get<DownloadMediaResponse>(retrieveMediaResponse.url, { ignoreBaseUrl: true });
+    const downloadedMediaResponse = await this.http.get<DownloadMediaResponse>(retrieveMediaResponse.url, { ignoreBaseUrl: true, responseType: 'blob' });
 
     return downloadedMediaResponse.data;
   }

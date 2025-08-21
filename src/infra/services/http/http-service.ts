@@ -1,3 +1,6 @@
+import { HTTP_SERVICE } from '@/config/http.config';
+import { HttpServiceFactory } from '@/infra/factories/services/http-service.factory';
+
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 export type HttpHeaders = Record<string, string>;
 export type ResponseType = 'json' | 'text' | 'blob' | 'arraybuffer';
@@ -53,3 +56,50 @@ export interface HttpClient {
   put<T = unknown, B = unknown>(url: string, body?: B, opts?: Omit<HttpRequestOptions<B>, 'body' | 'url' | 'method'>): Promise<HttpResponse<T>>;
   patch<T = unknown, B = unknown>(url: string, body?: B, opts?: Omit<HttpRequestOptions<B>, 'body' | 'url' | 'method'>): Promise<HttpResponse<T>>;
 }
+
+export interface HttpErrorDetails {
+  status: number;
+  statusText: string;
+  headers: HttpHeaders;
+  url?: string;
+  data?: unknown;
+  raw?: unknown;
+}
+
+export class HttpError extends Error {
+  public readonly details: HttpErrorDetails;
+
+  constructor(message: string, details: HttpErrorDetails) {
+    super(message);
+    this.name = 'HttpError';
+    this.details = details;
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, HttpError);
+    }
+  }
+}
+
+export class HttpRequestError extends HttpError {
+  constructor(details: HttpErrorDetails, originalError?: Error) {
+    super(`HTTP Request failed: ${details.status} ${details.statusText}`, details);
+    this.name = 'HttpRequestError';
+
+    if (originalError) {
+      this.stack = `${this.stack}\nCaused by: ${originalError.stack}`;
+    }
+  }
+}
+
+export class HttpResponseError extends HttpError {
+  constructor(details: HttpErrorDetails) {
+    const message = `HTTP Response error: ${details.status} ${details.statusText}${
+      details.data ? ` - ${JSON.stringify(details.data)}` : ''
+    }`;
+
+    super(message, details);
+    this.name = 'HttpResponseError';
+  }
+}
+
+export const GlobalHttpServiceInstance = HttpServiceFactory.create(HTTP_SERVICE);

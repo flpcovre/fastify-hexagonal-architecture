@@ -9,9 +9,9 @@ export class Attachment {
     public readonly type: MessageType,
     public readonly mimeType: string,
     public readonly fileName: string | null,
-    public readonly mediaKey: string | null,
-    public readonly url: string | null,
-    public readonly status: AttachmentStatus,
+    public readonly mediaKey: string,
+    public url: string | null,
+    public status: AttachmentStatus,
     public readonly createdAt: Date,
   ) {}
 

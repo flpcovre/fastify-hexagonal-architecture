@@ -10,7 +10,7 @@ interface CreateAttachmentInputDto {
   type: MessageType;
   mimeType:  string;
   fileName?: string;
-  mediaKey?: string;
+  mediaKey: string;
 }
 
 export class CreateCustomerAttachmentUseCase {
@@ -26,7 +26,7 @@ export class CreateCustomerAttachmentUseCase {
       type: input.type,
       mimeType: input.mimeType,
       fileName: input.fileName ?? null,
-      mediaKey: input.mediaKey ?? null,
+      mediaKey: input.mediaKey,
       url: null,
       status: 'pending',
       createdAt: new Date(),

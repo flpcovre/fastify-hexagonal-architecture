@@ -21,4 +21,13 @@ export class AttachmentRepositoryPrisma implements AttachmentRepository {
       data: attachment,
     });
   }
+
+  public async save(attachment: Attachment): Promise<void> {
+    await this.prisma.attachment.updateMany({
+      where: {
+        id: attachment.id,
+      },
+      data: attachment,
+    });
+  }
 }

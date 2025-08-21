@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequestOptions, HttpResponse } from '@/infra/services/http/http-service';
-import { AxiosInstance, default as axiosDefault } from 'axios';
+import { HttpClient, HttpError, HttpHeaders, HttpInterceptor, HttpRequestError, HttpRequestOptions, HttpResponse, HttpResponseError } from '@/infra/services/http/http-service';
+import { AxiosError, AxiosInstance, default as axiosDefault } from 'axios';
 
 export class AxiosHttpClient implements HttpClient {
   private readonly axios: AxiosInstance;
@@ -45,9 +45,54 @@ export class AxiosHttpClient implements HttpClient {
 
       return response;
     } catch (error) {
-      throw new Error(`${error}`);
+      if (error instanceof HttpError) {
+        throw error;
+      }
+
+      if (this.isAxiosError(error)) {
+        const axiosError = error as AxiosError;
+
+        if (axiosError.response) {
+          throw new HttpResponseError({
+            status: axiosError.response.status,
+            statusText: axiosError.response.statusText,
+            headers: (axiosError.response.headers ?? {}) as HttpHeaders,
+            url: axiosError.config?.url ?? options.url,
+            data: axiosError.response.data,
+            raw: axiosError.response,
+          });
+        } else if (axiosError.request) {
+          throw new HttpRequestError(
+            {
+              status: 0,
+              statusText: 'Network Error',
+              headers: {},
+              url: axiosError.config?.url ?? options.url,
+              data: null,
+              raw: axiosError.request,
+            },
+            error instanceof Error ? error : new Error(String(error)),
+          );
+        }
+      }
+
+      throw new HttpRequestError(
+        {
+          status: 0,
+          statusText: 'Unknown Error',
+          headers: {},
+          url: options.url,
+          data: null,
+          raw: error,
+        },
+        error instanceof Error ? error : new Error(String(error)),
+      );
     }
-  };
+  }
+
+  private isAxiosError(error: unknown): error is AxiosError {
+    return (error as AxiosError).isAxiosError === true;
+  }
 
   public async get<T = unknown>(url: string, opts?: Omit<HttpRequestOptions<never>, 'url' | 'method'> | undefined): Promise<HttpResponse<T>> {
     return await this.request<T>({ url, ...opts, method: 'GET' });
