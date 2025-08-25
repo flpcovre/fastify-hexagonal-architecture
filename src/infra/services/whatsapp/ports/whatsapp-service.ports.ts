@@ -1,5 +1,5 @@
 // export type DownloadMediaResponse = Blob | ArrayBuffer | Buffer;
-export type DownloadMediaResponse = Blob;
+export type DownloadMediaResponse = Buffer;
 
 export interface RetrieveMediaUrlResponse {
   id: string,
