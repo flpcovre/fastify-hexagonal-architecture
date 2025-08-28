@@ -128,7 +128,7 @@ model Attachment {
   mimeType  String           @map("mime_type")
   fileName  String?          @map("file_name")
   mediaKey  String?          @map("media_key")
-  url       String?
+  path      String?
   status    AttachmentStatus @default(pending)
   createdAt DateTime         @default(now()) @map("created_at")
 

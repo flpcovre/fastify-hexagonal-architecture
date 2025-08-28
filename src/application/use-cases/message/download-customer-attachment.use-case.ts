@@ -1,5 +1,6 @@
 import { Attachment } from '@/domain/chat/entities/attachment';
 import { UpdateAttachmentStatusUseCase } from '@/domain/chat/use-cases/attachments/update-attachment-status.use-case';
+import { AttachmentPath } from '@/domain/chat/value-objects/attachment-path';
 import { FileStorage } from '@/infra/services/storage/file-storage';
 import { WhatsAppService } from '@/infra/services/whatsapp/whatsapp-service';
 import { extension as mimeExtension } from 'mime-types';
@@ -16,21 +17,18 @@ export class DownloadCustomerAttachmentUseCase {
     if (!ext) throw new Error(`Could not identify extension for MIME type ${input.mimeType}`);
 
     const media = await this.whatsAppService.downloadMedia(input.mediaKey);
-    const filePath = `/attachments/${input.messageId}.${ext}`;
-
-    let url: string | undefined;
+    const filePath = AttachmentPath.create(input.id, ext);
 
     try {
-      url = await this.fileStorage.saveFile(filePath, media);
-      input.status = 'processed';
+      await this.fileStorage.saveFile(filePath.toString(), media);
+      input.toProcessed();
     } catch {
-      url = '';
-      input.status = 'failed';
+      input.toFailed();
     }
 
     await this.updateAttachmentStatusUseCase.execute({
       id: input.id,
-      url: url ?? null,
+      path: filePath.toString(),
       status: input.status,
     });
   }

@@ -31,7 +31,7 @@ export interface FastifyAppConfig {
     configuration: {
       theme?: 'default' | 'kepler' | 'alternate' | 'moon' | 'purple' | 'solarized' | 'bluePlanet' | 'deepSpace' | 'saturn' | 'elysiajs' | 'fastify' | 'mars' | 'laserwave' | 'none' | undefined;
     };
-  };
+  },
 }
 
 export interface FastifyAppBuilder {
@@ -41,5 +41,6 @@ export interface FastifyAppBuilder {
   setRoutes(config: FastifyAppConfig['api']): this;
   setAuth(config: FastifyAppConfig['auth']): this;
   setApiReference(config: FastifyAppConfig['apiReference']): this;
+  // setStaticFiles(config: string): this;
   build(): FastifyInstance;
 }

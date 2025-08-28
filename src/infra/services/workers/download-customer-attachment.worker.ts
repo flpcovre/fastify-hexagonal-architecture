@@ -10,7 +10,9 @@ export class DownloadCustomerAttachmentWorker {
 
   public register(): void {
     this.consumer.consume<Attachment>('download-customer-attachment-queue', async(data) => {
-      await this.downloadCustomerAttachmentUseCase.execute(data);
+      const attachment = Attachment.make(data);
+
+      await this.downloadCustomerAttachmentUseCase.execute(attachment);
       console.log(data);
       console.log('Attachment status updated');
     });

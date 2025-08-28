@@ -1,4 +1,4 @@
-import { chatMessageParamsSchema, createChatMessageSchema, createMessageResponseSchema, inboundMessageResponseSchema, inboundMessageSchema } from '@/adapters/http/routes/messages/schema';
+import { chatMessageParamsSchema, createChatMessageSchema, createMessageResponseSchema, retrieveAttachmentParamsSchema } from '@/adapters/http/routes/messages/schema';
 import { FastifyTypedInstance } from '@/adapters/http/types/types';
 import { makeMessageController } from '@/infra/factories/controllers/create-message-controller.factory';
 
@@ -27,6 +27,16 @@ export async function messagesRoutes(app: FastifyTypedInstance) {
       },
     },
   }, messageController.store.bind(messageController));
+
+  app.get('/attachments/:attachmentId', {
+    schema: {
+      tags: ['messages'],
+      params: retrieveAttachmentParamsSchema,
+      response: {
+        200: 
+      }
+    }
+  })
 }
 
 export default messagesRoutes;

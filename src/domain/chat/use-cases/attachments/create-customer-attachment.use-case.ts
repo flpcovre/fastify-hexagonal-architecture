@@ -27,7 +27,7 @@ export class CreateCustomerAttachmentUseCase {
       mimeType: input.mimeType,
       fileName: input.fileName ?? null,
       mediaKey: input.mediaKey,
-      url: null,
+      path: null,
       status: 'pending',
       createdAt: new Date(),
     });

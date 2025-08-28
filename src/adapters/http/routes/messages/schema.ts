@@ -40,6 +40,14 @@ export const inboundMessageResponseSchema = z.object({
   isTerminal: z.boolean().optional(),
 }).describe('Message created successfully');
 
+export const retrieveAttachmentParamsSchema = z.object({
+  attachmentId: z.string().uuid(),
+});
+
+// export const retrieveAttachmentResponseSchema = z.object({
+//   file: z.bu
+// })
+
 export type CreateChatMessageInput = z.infer<typeof createChatMessageSchema>;
 export type ChatMessageParams = z.infer<typeof chatMessageParamsSchema>;
 export type InboundMessageInput = z.infer<typeof inboundMessageSchema>;

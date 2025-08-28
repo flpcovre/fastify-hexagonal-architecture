@@ -9,10 +9,10 @@ export class AttachmentRepositoryPrisma implements AttachmentRepository {
     this.prisma = new PrismaClient();
   }
 
-  public async updateStatus(id: string, status: AttachmentStatus, url: string): Promise<void> {
+  public async updateStatus(id: string, status: AttachmentStatus, path: string): Promise<void> {
     await this.prisma.attachment.update({
       where: { id },
-      data: { status, url },
+      data: { status, path },
     });
   }
 

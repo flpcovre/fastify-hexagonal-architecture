@@ -89,6 +89,15 @@ class FastifyAppBuilderImpl implements FastifyAppBuilder {
     return this;
   }
 
+  // public setStaticFiles(config: string): this {
+  //   this.app.register(fastifyStatic, {
+  //     root: path.resolve(__dirname, '../../assets/uploads'),
+  //     prefix: '/uploads/',
+  //   });
+
+  //   return this;
+  // }
+
   public build(): FastifyInstance {
     return this.app;
   }

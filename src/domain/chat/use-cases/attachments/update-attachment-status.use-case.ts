@@ -3,7 +3,7 @@ import { AttachmentRepository } from '@/domain/chat/ports/attachment-repository'
 
 interface UpdateAttachmentStatusInputDto {
   id: string;
-  url: string;
+  path: string;
   status: AttachmentStatus;
 }
 
@@ -13,6 +13,6 @@ export class UpdateAttachmentStatusUseCase {
   ) {}
 
   public async execute(input: UpdateAttachmentStatusInputDto): Promise<void> {
-    await this.attachmentRepository.updateStatus(input.id, input.status, input.url);
+    await this.attachmentRepository.updateStatus(input.id, input.status, input.path);
   }
 }
