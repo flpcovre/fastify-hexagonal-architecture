@@ -28,15 +28,15 @@ export async function messagesRoutes(app: FastifyTypedInstance) {
     },
   }, messageController.store.bind(messageController));
 
-  app.get('/attachments/:attachmentId', {
-    schema: {
-      tags: ['messages'],
-      params: retrieveAttachmentParamsSchema,
-      response: {
-        200: 
-      }
-    }
-  })
+  // app.get('/attachments/:attachmentId', {
+  //   schema: {
+  //     tags: ['messages'],
+  //     params: retrieveAttachmentParamsSchema,
+  //     response: {
+  //       200: 
+  //     }
+  //   }
+  // })
 }
 
 export default messagesRoutes;

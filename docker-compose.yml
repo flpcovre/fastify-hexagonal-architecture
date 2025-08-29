@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3333:3333
+      - "9229:9229" 
     volumes:
       - .:/app
       - /app/node_modules
@@ -13,7 +14,7 @@ services:
       - web
     depends_on:
       - postgres
-    command: pnpm run dev
+    command: pnpm run debug
 
   postgres:
     container_name: postgres

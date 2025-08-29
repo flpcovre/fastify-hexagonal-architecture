@@ -15,5 +15,3 @@ COPY . .
 RUN npx prisma generate
 
 EXPOSE 3333
-
-CMD ["pnpm", "run", "dev"]

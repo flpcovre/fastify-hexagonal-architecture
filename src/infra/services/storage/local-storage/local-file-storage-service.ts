@@ -19,7 +19,7 @@ export class LocalFileStorage implements FileStorage {
     await fs.unlink(fullPath);
   }
 
-  public async getFileUrl(filePath: string): Promise<string> {
-    return `${this.baseUrl}/${filePath}`;
+  public async getFileUrl(path: string): Promise<string> {
+    throw new Error();
   }
 }
